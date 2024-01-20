@@ -1,6 +1,5 @@
 // Get the container element that holds the headlines
 const headlinesContainer = document.querySelector( '.latest-headlines' );
-
 // Get the headlines inside the container
 const headlines = headlinesContainer.querySelectorAll( 'li' );
 
@@ -23,7 +22,7 @@ function animateHeadlines () {
     } );
 
     // Reset the position if the container has scrolled past the headlines
-    if ( position <= -( totalWidth + headlinesContainer.offsetLeft ) ) {
+    if ( position <= -( totalWidth + ( headlinesContainer.offsetLeft ) * 2 ) ) {
         // set position to be the width of the container
         position = headlinesContainer.offsetWidth + headlinesContainer.offsetLeft;
     }

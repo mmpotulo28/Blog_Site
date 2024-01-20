@@ -3,7 +3,8 @@
  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+  <link rel="stylesheet" href="../../assets/css/forms.css" />
   <title>Cape Blog | Home</title>
  </head>
  <body>
@@ -37,38 +38,23 @@
 
   <main>
    <div class="main-column">
-    <div class="post">
-     <a href="#" class="post-title"
-      ><h3>Cape town shots and kills a learner</h3></a
-     >
-     <div class="post-labels">
-      <p class="post-caregoty">What's Hot</p>
-      <p class="post-category">Education</p>
-      <p class="post-time">14/01/2024 | 13:02</p>
-      <p class="post-author">Admin</p>
+    <form id="login-form">
+     <div class="form-group">
+      <label for="username">Username: </label>
+      <input type="text" name="username" id="login-username" required />
+      <span id="login-error-text" class="error-text"></span>
      </div>
-     <img
-      src="../assets/images/police-shots-learner.jpg"
-      alt=""
-      class="post-image"
-     />
-     <p class="post-content view-post-content">
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea, earum.
-      Maxime corrupti quibusdam vero cumque? Vitae cupiditate cumque asperiores
-      expedita voluptas facilis, architecto quisquam vero sit exercitationem ad
-      nemo. Impedit.
-      <br /><br />
-      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Est
-      reprehenderit quis commodi illo fuga vel harum, esse magni illum, quas id.
-      Reiciendis explicabo repellat recusandae reprehenderit vero eligendi
-      dicta. Nihil.
-      <br /><br />
-      Lorem ipsum dolo sit amet co Lorem ipsum dolor sit amet consectetur,
-      adipisicing elit. Repellendus harum eveniet exercitationem molestias porro
-      dignissimos. Assumenda, hic. Quaerat, a odit necessitatibus nostrum
-      dignissimos, quidem molestias facilis, earum consequatur vel cum?
-     </p>
-    </div>
+     <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" name="password" id="login-password" required />
+      <span id="login-error-text" class="error-text"></span>
+     </div>
+
+     <button type="submit">Login</button>
+     <span
+      >Don't have an account yet? <a href="./register.html">register</a></span
+     >
+    </form>
    </div>
    <div class="sidebar">
     <div class="categories sidebar-sec">
@@ -129,6 +115,6 @@
    </div>
   </footer>
 
-  <script src="../assets/js/main.js"></script>
+  <script src="../../assets/js/main.js"></script>
  </body>
 </html>

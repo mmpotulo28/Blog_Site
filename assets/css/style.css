@@ -68,6 +68,7 @@ body {
  padding: 10px 10px;
  border-radius: 5px 50% 50% 5px;
  text-wrap: nowrap;
+ text-decoration: none;
 }
 
 .main-nav .nav-items .nav-item:hover {
@@ -139,6 +140,7 @@ main {
  height: fit-content;
  padding: 15px;
  justify-content: center;
+ justify-self: center;
  width: 100%;
 }
 
@@ -151,7 +153,7 @@ main {
  min-height: 80vh;
  padding: 15px;
  min-width: 200px;
- transition: all 0.5s ease-in;
+ transition: all 0.5s ease-out;
 }
 .sidebar a {
  text-decoration: none;
@@ -183,6 +185,8 @@ main {
  display: flex;
  flex-direction: column;
  gap: 20px;
+ justify-content: center;
+ justify-self: center;
 }
 .post {
  display: flex;
@@ -196,6 +200,7 @@ main {
  width: 90%;
  height: fit-content;
  box-shadow: 3px 3px 5px 0 var(--theme-color);
+ margin: auto;
 }
 
 .post .post-title {
