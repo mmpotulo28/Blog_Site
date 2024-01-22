@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+  <link rel="stylesheet" href="../../assets/css/forms.css" />
+  <title>Cape Blog | Home</title>
+ </head>
+ <body>
+  <header>
+   <nav class="main-nav">
+    <ul class="nav-logo">
+     <li>Cape Blog</li>
+    </ul>
+    <ul class="nav-items">
+     <a href="../../index.html" class="nav-item"><li>Home</li></a>
+     <a href="#" class="nav-item"><li>Posts</li></a>
+     <a href="#" class="nav-item"><li>Login</li></a>
+     <a href="../contact/contact.html" class="nav-item"><li>Contact us</li></a>
+    </ul>
+   </nav>
+
+   <nav class="latest-nav">
+    <ul class="latest-side">
+     <li>Latest</li>
+    </ul>
+    <ul class="latest-headlines">
+     <li>Cape Town police shots and kills a learner</li>
+     <li>UCT Students face Academic exclusions due to NSFAS</li>
+     <li>How to look good on a Vacation</li>
+     <li>School Opening dates</li>
+    </ul>
+   </nav>
+  </header>
+
+  <main>
+   <div class="main-column">
+    <div class="auth-forms">
+     <form class="login-form" id="login-form">
+      <h1 class="form-title">Login</h1>
+      <div class="form-group">
+       <label for="username">Username: </label>
+       <input type="text" name="username" id="login-username" required />
+       <span class="error-text"></span>
+      </div>
+      <div class="form-group">
+       <label for="password">Password</label>
+       <input type="password" name="password" id="login-password" required />
+       <span class="error-text"></span>
+      </div>
+
+      <button type="submit">Login</button>
+      <span
+       >Don't have an account yet? <a href="#register-form">register</a></span
+      >
+     </form>
+
+     <form class="login-form" id="register-form">
+      <h1 class="form-title">Register</h1>
+      <div class="form-group">
+       <label for="fullname">Full Name</label>
+       <input type="text" name="fullname" id="reg-fullname" required />
+       <span class="error-text"></span>
+      </div>
+      <div class="form-group">
+       <label for="number">Number:</label>
+       <input type="text" name="number" id="reg-number" required />
+       <span class="error-text"></span>
+      </div>
+      <div class="form-group">
+       <label for="email">Email:</label>
+       <input type="email" name="email" id="reg-email" required />
+       <span class="error-text"></span>
+      </div>
+      <div class="form-group">
+       <label for="username">Username: </label>
+       <input type="text" name="username" id="reg-username" required />
+       <span class="error-text"></span>
+      </div>
+      <div class="form-group">
+       <label for="password">Password</label>
+       <input type="password" name="password" id="reg-password" required />
+       <span class="error-text"></span>
+      </div>
+      <div class="form-group">
+       <label for="confirm-pass">confirm password</label>
+       <input type="password" name="confirm-pass" id="confirm-pass" required />
+       <span class="error-text"></span>
+      </div>
+
+      <button type="submit">Login</button>
+      <span>Already have an account? <a href="#login-form">register</a></span>
+     </form>
+    </div>
+   </div>
+   <div class="sidebar">
+    <div class="categories sidebar-sec">
+     <h1 class="sec-heading">Category</h1>
+     <a href="#">Vacations</a>
+     <a href="#">Education</a>
+     <a href="#">Healthy Living</a>
+     <a href="#">Travel</a>
+     <a href="#">What's Hot</a>
+    </div>
+
+    <div class="popular sidebar-sec">
+     <h1 class="sec-heading">Popular</h1>
+     <a href="#">Vacations</a>
+     <a href="#">Education</a>
+     <a href="#">Healthy Living</a>
+     <a href="#">Travel</a>
+     <a href="#">What's Hot</a>
+    </div>
+
+    <div class="top-authors sidebar-sec">
+     <h1 class="sec-heading">Top Authors</h1>
+     <a href="#">A. jacobs</a>
+     <a href="#">M. Mpotulo</a>
+     <a href="#">J. Mpotulo</a>
+     <a href="#">J. Mpotulo</a>
+     <a href="#">J. Mpotulo</a>
+    </div>
+   </div>
+  </main>
+
+  <footer class="main-footer">
+   <div class="quick-links footer-sec">
+    <h4 class="sec-heading">Quick Links</h4>
+    <a href="#">Login</a>
+    <a href="#">Contact Us</a>
+    <a href="#">Create Post</a>
+    <a href="#">My Profile</a>
+   </div>
+   <div class="footer-contacts footer-sec">
+    <h4 class="sec-heading">Contact Us</h4>
+    <a target="_blank" href="mailto:mpotulom28@gmail.com"
+     >mpotulom28@gmail.com</a
+    >
+    <a href="tel:+27796530453">+2779 653 0453</a>
+    <br />
+    <p
+     >Developed By:
+     <a target="_blank" href="https://manelisim.pages.dev">M.Mpotulo</a></p
+    >
+   </div>
+   <div class="footer-socials footer-sec">
+    <h4 class="sec-heading">Socials</h4>
+    <a href="#">Facebook</a>
+    <a href="#">Twitter</a>
+    <a href="#">Instagram</a>
+    <a href="#">Youtube</a>
+   </div>
+  </footer>
+
+  <script type="module" src="../../assets/js/main.js"></script>
+  <script type="module" src="./login.js"></script>
+ </body>
+</html>

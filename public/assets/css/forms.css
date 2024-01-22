@@ -1,18 +1,46 @@
-#login-form {
+:root {
+ --theme-color: blue;
+ --darkbg-color: #05001f;
+ --lightbg-color: #afafaf;
+ --error-color: #a70000;
+}
+
+.auth-forms {
+ display: flex;
+ flex-direction: row;
+ flex-wrap: wrap;
+ gap: 40px;
+ padding: 20px;
+ border-radius: 20px;
+ color: var(--darkbg-color);
+ max-width: 90%;
+ margin: auto;
+}
+
+.form-title {
+ display: block;
+ width: 90%;
+ margin: auto;
+ text-align: center;
+ margin-bottom: 20px;
+}
+
+.login-form {
  background-color: var(--lightbg-color);
  color: var(--darkbg-color);
  padding: 20px;
- border-radius: 20px;
+ border-radius: 0 20px 20px 0;
  box-shadow: 3px 3px 5px 0 var(--theme-color);
  display: flex;
  flex-direction: column;
  justify-content: flex-start;
  gap: 10px;
- max-width: 400px;
- margin: auto;
+ max-width: 250px;
+ margin: 0 auto;
+ height: fit-content;
 }
 
-#login-form .form-group {
+.login-form .form-group {
  display: flex;
  flex-direction: column;
  gap: 5px;
@@ -37,7 +65,7 @@
  outline: none;
 }
 
-#login-form button {
+.login-form button {
  display: block;
  width: fit-content;
  padding: 5px 10px;
@@ -50,8 +78,13 @@
  transition: all 0.2s ease-out;
 }
 
-#login-form button:hover {
+.login-form button:hover {
  background-color: var(--theme-color);
  box-shadow: 2px 2px 4px 0 var(--darkbg-color);
  scale: 1.1;
+}
+
+.error-text {
+ color: var(--error-color);
+ font-size: 14px;
 }
