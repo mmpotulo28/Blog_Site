@@ -2,13 +2,13 @@
   "name": "blog_site",
   "version": "1.0.0",
   "description": "Blogging website ",
-  "main": "index.html",
+  "main": "public/index.html",
   "scripts": {
     "test": "jasmine"
   },
   "repository": {
     "type": "git",
-    "url": "blog_site"
+    "url": "git@https://github.com/mmpotulo28/Blog_Site.git"
   },
   "author": "Manelisi Mpotulo",
   "license": "MIT",
