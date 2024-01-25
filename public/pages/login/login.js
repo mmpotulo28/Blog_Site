@@ -147,32 +147,6 @@ loginForm.addEventListener( 'submit', ( event ) => {
         } );
 } );
 
-// const validateLoginInput = ( input ) => {
-//     const inputID = input.getAttribute( 'id' );
-
-//     switch ( inputID ) {
-//         case 'login-username':
-//             // compate username with the one in the database
-//             if ( input.value != credentials.username ) {
-//                 showError( input, 'Invalid username' );
-//             } else {
-//                 removeError( input );
-//             }
-//             break;
-//         case 'login-password':
-//             // compate password with the one in the database
-//             if ( input.value != credentials.password ) {
-//                 showError( input, 'Invalid password' );
-//             } else {
-//                 removeError( input );
-//             }
-//             break;
-//         default:
-//             break;
-//     }
-// };
-
-
 const showError = ( input, message ) => {
     // get the cloest p tag
     const formControl = input.parentElement;

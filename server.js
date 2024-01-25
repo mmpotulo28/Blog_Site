@@ -94,6 +94,14 @@ app.get( '/users/:id', ( req, res ) => {
     } );
 } );
 
+
+app.get( '/posts', ( req, res ) => {
+    db.query( 'SELECT * FROM Posts', ( err, results ) => {
+        if ( err ) throw err;
+        res.json( results );
+    } );
+} );
+
 // close the database connection
 app.get( '/closecon', ( req, res ) => {
     db.end( ( err ) => {
