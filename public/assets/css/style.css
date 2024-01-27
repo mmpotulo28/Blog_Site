@@ -195,7 +195,7 @@ main {
  gap: 10px;
  background-color: var(--lightbg-color);
  color: var(--darkbg-color);
- border-radius: 20px;
+ border-radius: 0 0 10px 10px;
  padding: 15px 25px;
  width: 90%;
  height: fit-content;
@@ -291,4 +291,93 @@ main {
 
 .main-footer .footer-sec h4 {
  font-size: 19px;
+}
+
+
+/* user dashboard */
+.dashboard{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    flex-wrap: nowrap;
+    padding: 0px 10px;
+    width: 100%;
+}
+.dashboard-sidebar {
+ display: flex;
+ flex-direction: column;
+ border-right: 1px solid var(--lightbg-color);
+ min-height: 50vh;
+ padding: 15px;
+ min-width: 150px;
+ transition: all 0.5s ease-out;
+ font-size: 20px;
+ max-width: 300px;
+ gap : 20px;
+ flex-grow: 1
+ ;
+}
+
+.dashboard-sidebar .dashboard-sidebar-links {
+ display: flex;
+ flex-direction: column;
+ gap: 10px;
+ width: 100%;
+}
+
+.dashboard-sidebar .dashboard-sidebar-links a {
+ text-decoration: none;
+ color: var(--theme-color);
+ padding: 5px 10px;
+ background-color: var(--lightbg-color);
+}
+
+.dashboard-sidebar .dashboard-sidebar-links a:hover {
+    color: var(--lightbg-color);
+    background-color: var(--theme-color);
+}
+
+.dashboard-content {
+ display: flex;
+ flex-direction: column;
+ gap: 20px;
+ flex-grow: 2;
+ background-color: var(--lightbg-color);
+ color: var(--darkbg-color);
+ padding: 30px 20px;
+ width: 100%;
+ max-width: calc(100vw - 300px);
+ overflow-x: auto;
+ overflow-y: hidden;
+}
+
+.dashboard-content .my-posts-table {
+    border-radius: 0px;
+    overflow: hidden;
+    border-collapse: separate;
+    border-spacing: 0px;
+}
+
+.my-posts-table thead tr{
+    background-color: var(--darkbg-color);
+    color: var(--lightbg-color);
+    text-align: center;
+    text-wrap: nowrap;
+}
+
+.my-posts-table thead tr th, .my-posts-table tbody tr td{
+    padding: 10px 20px;
+}
+
+.my-posts-table tbody tr{
+    background-color: var(--lightbg-color);
+    color: var(--darkbg-color);
+    text-align: center;
+    text-wrap: nowrap;
+    border: 2px solid var(--darkbg-color);
+}
+
+.my-posts-table tbody tr td{
+    border: 2px solid var(--darkbg-color);
+    
 }

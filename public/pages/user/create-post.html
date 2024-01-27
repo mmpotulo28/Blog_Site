@@ -45,7 +45,7 @@
             </div>
             <div class="dashboard-sidebar-links">
                 <a href="#">My Profile</a>
-                <a href="./my-posts.html">My Posts</a>
+                <a href="#">My Posts</a>
                 <a href="#">Create Post</a>
                 <a href="#">Settings</a>
                 <a href="#">Logout</a>
@@ -54,6 +54,35 @@
 
     <!--dashboard content -->
     <div class="dashboard-content">
+        <!-- my Posts -->
+        <form class="create-post-form">
+            <h3 class="form-title">Create Post</h3>
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" name="title" id="title" required/>
+            </div>
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select name="category" id="category" required>
+                    <option value="news">News</option>
+                    <option value="sports">Sports</option>
+                    <option value="fashion">Fashion</option>
+                    <option value="lifestyle">Lifestyle</option>
+                    <option value="entertainment">Entertainment</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="content">Content</label>
+                <textarea name="content" id="content" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="image">Image</label>
+                <input type="file" name="image" id="image" />
+            </div>
+            <div class="form-group">
+                <button type="submit">Create Post</button>
+            </div>
+        </form>
     </div>
 
   </main>
@@ -89,5 +118,6 @@
   </footer>
 
   <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/create-post.js"></script>
  </body>
 </html>

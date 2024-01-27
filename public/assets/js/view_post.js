@@ -3,17 +3,21 @@ const mainColumn = document.querySelector( '.main-column' );
 function createPost ( post ) {
     // fix image path
     let image = post.post_image.replace( 'assets', '../assets' );
-    console.log( image );
+
+    // seperate time and date from created_at
+    const date = post.created_at.split( 'T' )[ 0 ];
+    const time = post.created_at.split( 'T' )[ 1 ].split( '.' )[ 0 ];
+
 
     const postContainer = `
 <div class="post">
-     <a href="#" class="post-title"
+     <a href="./pages/view-post.html?postID=${ post.id }" class="post-title"
       ><h3>${ post.post_title }</h3></a
      >
      <div class="post-labels">
       <p class="post-caregoty">What's Hot</p>
       <p class="post-category">Education</p>
-      <p class="post-time">14/01/2024 | 13:02</p>
+      <p class="post-time">${ date } | ${ time }</p>
       <p class="post-author">${ post.post_author }</p>
      </div>
      <img

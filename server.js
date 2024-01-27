@@ -102,10 +102,72 @@ app.get( '/posts', ( req, res ) => {
     } );
 } );
 
-// close the database connection
-app.get( '/closecon', ( req, res ) => {
-    db.end( ( err ) => {
+// image upload
+const multer = require( 'multer' );
+const path = require( 'path' );
+
+const storage = multer.diskStorage( {
+    destination: './public/assets/images',
+    filename: ( req, file, cb ) => {
+        cb( null, file.originalname ); // Save with original name
+    }
+} );
+
+const upload = multer( {
+    storage: storage
+} ).single( 'image' );
+
+app.post( '/upload', ( req, res ) => {
+    upload( req, res, ( err ) => {
         if ( err ) throw err;
-        console.log( 'Database connection closed!' );
+        res.send( 'Image uploaded' );
+    } );
+} );
+
+// create post
+app.post( '/create-post', ( req, res ) => {
+    const title = req.body.title;
+    const content = req.body.content;
+    const image = req.body.image;
+    const author = req.body.author;
+
+    db.query(
+        'INSERT INTO posts (post_title, post_content, post_image, post_author) VALUES (?, ?, ?, ?)',
+        [ title, content, image, author ],
+        ( err, results ) => {
+            if ( err ) throw err;
+            console.log( 'Post added to the database: ', results );
+            res.send( 'Post added to the database' );
+        }
+    );
+} );
+
+// update post
+app.post( '/update-post', ( req, res ) => {
+    const title = req.body.title;
+    const content = req.body.content;
+    const image = req.body.image;
+    const author = req.body.author;
+    const postID = req.query.postID;
+
+    db.query(
+        'UPDATE posts SET post_title = ?, post_content = ?, post_image = ?, post_author = ? WHERE id = ?',
+        [ title, content, image, author, postID ],
+        ( err, results ) => {
+            if ( err ) throw err;
+            console.log( 'Post updated: ', results );
+            res.send( 'Post updated' );
+        }
+    );
+} );
+
+// delete post
+app.delete( '/delete-post', ( req, res ) => {
+    const postID = req.query.postID;
+
+    db.query( 'DELETE FROM posts WHERE id = ?', [ postID ], ( err, results ) => {
+        if ( err ) throw err;
+        console.log( 'Post deleted: ', results );
+        res.send( 'Post deleted' );
     } );
 } );
