@@ -2,7 +2,7 @@
   "name": "blog_site",
   "version": "1.0.0",
   "description": "Blogging website ",
-  "main": "public/index.html",
+  "main": "index.js",
   "scripts": {
     "test": "jasmine"
   },
