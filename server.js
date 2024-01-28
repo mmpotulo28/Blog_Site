@@ -12,14 +12,13 @@ app.use( bodyParser.urlencoded( { extended: true } ) );
 app.listen( port, () => {
     console.log( `Server is running on port ${ port }` );
 } );
-
-const mysql = require( 'mysql' );
-const db = mysql.createConnection( {
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'blogsite'
-} );
+const mysql = require('mysql');
+const db = mysql.createConnection({
+    host: 'mysqlblogserver.database.windows.net',
+    user: 'blogsite-asmin',
+    password: 'Manelisi@22',
+    database: 'blosite'
+});
 
 db.connect( ( err ) => {
     if ( err ) throw err;
