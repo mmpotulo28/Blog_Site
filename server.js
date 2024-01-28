@@ -12,6 +12,7 @@ app.use( bodyParser.urlencoded( { extended: true } ) );
 app.listen( port, () => {
     console.log( `Server is running on port ${ port }` );
 } );
+
 const mysql = require('mysql');
 const db = mysql.createConnection({
     host: 'mysqlblogserver.database.windows.net',
