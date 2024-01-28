@@ -29,7 +29,7 @@ function createPost ( post ) {
 }
 
 // Fetch all posts from the API
-fetch( 'http://127.0.0.1:3000/posts' )
+fetch( 'http://localhost:8080/posts' )
     .then( response => response.json() )
     .then( posts => {
         posts.forEach( post => {
