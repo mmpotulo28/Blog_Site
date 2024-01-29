@@ -37,62 +37,35 @@
   </header>
 
   <main>
-   <div class="dashboard">
-    <!-- dashboard sidebar -->
-    <div class="dashboard-sidebar">
-     <div class="dashboard-sidebar-header">
-      <h3>Dashboard</h3>
-     </div>
-     <div class="dashboard-sidebar-links">
-      <a href="./user-dashboard.html">My Profile</a>
-      <a href="./my-posts.html">My Posts</a>
-      <a href="#">Create Post</a>
-      <a href="./settings.html">Settings</a>
-      <a href="../login/logout.html">Logout</a>
-     </div>
+    <div class="dashboard">
+        <!-- dashboard sidebar -->
+        <div class="dashboard-sidebar">
+            <div class="dashboard-sidebar-header">
+                <h3>Dashboard</h3>
+            </div>
+            <div class="dashboard-sidebar-links">
+                <a href="./user-dashboard.html">My Profile</a>
+                <a href="./my-posts.html">My Posts</a>
+                <a href="./create-post.html">Create Post</a>
+                <a href="./settings.html">Settings</a>
+                <a href="../login/logout.html">Logout</a>
+            </div>
     </div>
 
     <!--dashboard content -->
     <div class="dashboard-content">
-     <form class="create-post-form">
-      <form-head><h3 class="form-title">Create Post</h3></form-head>
-      <div class="form-body">
-       <div class="form-super-group left-super-group">
-        <div class="form-group">
-         <label for="title">Title</label>
-         <input type="text" name="title" id="title" required />
-        </div>
-        <div class="form-group">
-         <label for="category">Category</label>
-         <select name="category" id="category" required>
-          <option value="news">News</option>
-          <option value="sports">Sports</option>
-          <option value="fashion">Fashion</option>
-          <option value="lifestyle">Lifestyle</option>
-          <option value="entertainment">Entertainment</option>
-         </select>
-        </div>
-        <div class="form-group">
-         <label for="image">Image</label>
-         <input type="file" name="image" id="image" />
-        </div>
-       </div>
-
-       <div class="form-super-group right-super-group">
-        <div class="form-group">
-         <label for="content">Content</label>
-         <textarea name="content" id="content" required></textarea>
-        </div>
-
-        <div class="form-group">
-         <button type="submit">Create Post</button>
-        </div>
-       </div>
-      </div>
-     </form>
+        <!-- confirm post delete -->
+        <div class="confirm-delete">
+            <h3>Are you sure you want to log out?</h3>
+            <div class="confirm-delete-btns">
+                <a href="#" class="confirm-delete-btn" id="logout-btn-yes">Yes</a>
+                <a href="#" class="confirm-delete-btn" id="logout-btn-no">No</a>
+            </div>
+        </div>    
     </div>
-   </div>
+
   </main>
+
 
   <footer class="main-footer">
    <div class="quick-links footer-sec">
@@ -113,7 +86,6 @@
      >Developed By:
      <a target="_blank" href="https://manelisim.pages.dev">M.Mpotulo</a></p
     >
-    
    </div>
    <div class="footer-socials footer-sec">
     <h4 class="sec-heading">Socials</h4>
@@ -125,7 +97,6 @@
   </footer>
 
   <script src="../../assets/js/main.js"></script>
-  <script src="../../assets/js/create-post.js"></script>
-  <script async src="./check_login.js"></script>
+  <script src="./logout.js"></script>
  </body>
 </html>

@@ -13,13 +13,13 @@ app.listen( port, () => {
     console.log( `Server is running on port ${ port }` );
 } );
 
-const mysql = require('mysql');
-const db = mysql.createConnection({
-    host: 'mysqlblogserver.database.windows.net',
-    user: 'blogsite-asmin',
-    password: 'Manelisi@22',
-    database: 'blosite'
-});
+const mysql = require( 'mysql' );
+const db = mysql.createConnection( {
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'blogsite'
+} );
 
 db.connect( ( err ) => {
     if ( err ) throw err;
@@ -85,14 +85,19 @@ app.post( '/users', ( req, res ) => {
     }
 } );
 
-app.get( '/users/:id', ( req, res ) => {
-    const id = req.params.id;
+app.post( '/update-users', ( req, res ) => {
+    const id = req.query.userID;
+    const username = req.body.username;
+    const fullname = req.body.fullname;
+    const email = req.body.email;
 
-    db.query( 'SELECT * FROM Users WHERE id = ?', [ id ], ( err, results ) => {
+    db.query( 'UPDATE Users SET username = ?, fullname = ?, email = ? WHERE id = ?', [ username, fullname, email, id ], ( err, results ) => {
         if ( err ) throw err;
-        res.json( results );
+        console.log( 'User updated: ', results );
+        res.json( { message: 'updated' } );
     } );
 } );
+
 
 
 app.get( '/posts', ( req, res ) => {
@@ -130,10 +135,11 @@ app.post( '/create-post', ( req, res ) => {
     const content = req.body.content;
     const image = req.body.image;
     const author = req.body.author;
+    const author_id = req.body.author_id;
 
     db.query(
-        'INSERT INTO posts (post_title, post_content, post_image, post_author) VALUES (?, ?, ?, ?)',
-        [ title, content, image, author ],
+        'INSERT INTO posts (post_title, post_content, post_image, post_author, author_id) VALUES (?, ?, ?, ?, ?)',
+        [ title, content, image, author, author_id ],
         ( err, results ) => {
             if ( err ) throw err;
             console.log( 'Post added to the database: ', results );

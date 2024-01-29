@@ -37,7 +37,7 @@ const url = new URL( window.location.href );
 const postID = url.searchParams.get( 'postID' );
 console.log( postID );
 
-fetch( `http://127.0.0.1:3000/posts` )
+fetch( `http://127.0.0.1:8080/posts` )
     .then( ( response ) => response.json() )
     .then( ( data ) => {
         data.forEach( post => {

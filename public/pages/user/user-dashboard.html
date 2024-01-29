@@ -37,27 +37,73 @@
   </header>
 
   <main>
-    <div class="dashboard">
-        <!-- dashboard sidebar -->
-        <div class="dashboard-sidebar">
-            <div class="dashboard-sidebar-header">
-                <h3>Dashboard</h3>
-            </div>
-            <div class="dashboard-sidebar-links">
-                <a href="#">My Profile</a>
-                <a href="./my-posts.html">My Posts</a>
-                <a href="#">Create Post</a>
-                <a href="#">Settings</a>
-                <a href="#">Logout</a>
-            </div>
+   <div class="dashboard">
+    <!-- dashboard sidebar -->
+    <div class="dashboard-sidebar">
+     <div class="dashboard-sidebar-header">
+      <h3>Dashboard</h3>
+     </div>
+     <div class="dashboard-sidebar-links">
+      <a href="#">My Profile</a>
+      <a href="./my-posts.html">My Posts</a>
+      <a href="./create-post.html">Create Post</a>
+      <a href="./settings.html">Settings</a>
+      <a href="../login/logout.html">Logout</a>
+     </div>
     </div>
 
     <!--dashboard content -->
     <div class="dashboard-content">
+     <!-- user profile info -->
+     <div class="user-profile">
+      <div class="user-profile-header">
+       <h3>My Profile</h3>
+      </div>
+      <div class="user-profile-info">
+       <div class="post-insights">
+        <div class="post-insight">
+         <h4>Posts</h4>
+         <p>0</p>
+        </div>
+        <div class="post-insight">
+         <h4>Comments</h4>
+         <p>0</p>
+        </div>
+        <div class="post-insight">
+         <h4>Views</h4>
+         <p>0</p>
+        </div>
+       </div>
+       <form class="user-profile-form">
+        <div class="form-group">
+         <label for="name">Name</label>
+         <input type="text" name="name" id="name" required />
+         <span class="error-text"></span>
+        </div>
+        <div class="form-group">
+         <label for="surname">Surname</label>
+         <input type="text" name="surname" id="surname" required />
+         <span class="error-text"></span>
+        </div>
+        <div class="form-group">
+         <label for="email">Email</label>
+         <input type="email" name="email" id="email" required />
+         <span class="error-text"></span>
+        </div>
+        <div class="form-group">
+         <label for="password">Username</label>
+         <input type="text" name="username" id="username" required />
+         <span class="error-text"></span>
+        </div>
+        <div class="form-group">
+         <button type="submit" class="btn">Update</button>
+        </div>
+       </form>
+      </div>
+     </div>
     </div>
-
+   </div>
   </main>
-
 
   <footer class="main-footer">
    <div class="quick-links footer-sec">
@@ -89,5 +135,7 @@
   </footer>
 
   <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/user-dashboard.js"></script>
+  <script async src="./check_login.js"></script>
  </body>
 </html>

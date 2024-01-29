@@ -1,29 +1,36 @@
-const registerForm = document.querySelector( '#register-form' );
-const loginForm = document.querySelector( '#login-form' );
-
-const credentials = {
-    username: 'admin',
-    password: 'admin',
-};
-
 // check if user is logged in
 const user_id = sessionStorage.getItem( 'user_id' );
-if ( user_id ) {
-    window.location.href = '../user/user-dashboard.html';
+if ( !user_id ) {
+    window.location.href = '../login/login.html';
 }
 
-registerForm.addEventListener( 'submit', ( event ) => {
+// get all elements
+const name = document.querySelector( '#name' );
+const surname = document.querySelector( '#surname' );
+const username = document.querySelector( '#username' );
+const email = document.querySelector( '#email' );
+const userProfileForm = document.querySelector( '.user-profile-form' );
+
+// update user profile
+userProfileForm.addEventListener( 'submit', ( event ) => {
     event.preventDefault();
 
-    // get all inputs
-    const inputs = registerForm.querySelectorAll( 'input' );
+    // get form values
+    const userProfile = {
+        name: name.value,
+        surname: surname.value,
+        username: username.value,
+        email: email.value,
+    };
+
+    // validate form values
+    const inputs = userProfileForm.querySelectorAll( 'input' );
     inputs.forEach( ( input ) => {
         validateInput( input );
     } );
 
-    // if there are no errors in the form add information to the database
-    // check all error messages if they are empty
-    const errorMessages = registerForm.querySelectorAll( '.error-text' );
+    // if there are no errors
+    const errorMessages = userProfileForm.querySelectorAll( '.error-text' );
     let errorCount = 0;
     errorMessages.forEach( ( message ) => {
         if ( message.innerText != '' ) {
@@ -33,38 +40,20 @@ registerForm.addEventListener( 'submit', ( event ) => {
 
     // if there are no errors in the form
     if ( errorCount == 0 ) {
-        const newUser = {
-            fullname: document.querySelector( '#reg-fullname' ).value,
-            username: document.querySelector( '#reg-username' ).value,
-            email: document.querySelector( '#reg-email' ).value,
-            number: document.querySelector( '#reg-number' ).value,
-            password: document.querySelector( '#reg-password' ).value,
-        };
-
-        // add data to the database
-        fetch( 'http://127.0.0.1:8080/users/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify( newUser ),
-        } )
-            .then( ( response ) => response.json() )
-            .then( ( data ) => {
-                alert( 'Success:', data );
-                window.location.reload();
-            } )
-            .catch( ( error ) => {
-                console.error( 'Error:', error );
-            } );
+        // combine name and surname
+        userProfile.fullname = `${userProfile.name} ${userProfile.surname}`;
+        updateUserProfile( userProfile );
+    } else {
+        return;
     }
+
 } );
 
 const validateInput = ( input ) => {
     const inputID = input.getAttribute( 'id' );
 
     switch ( inputID ) {
-        case 'reg-fullname':
+        case 'name':
             // make sure name is longer than 6 characters
             if ( input.value.length < 3 || input.value.length > 40 ) {
                 showError( input, 'Name must be between (6-40) charecters long' );
@@ -75,7 +64,18 @@ const validateInput = ( input ) => {
                 removeError( input );
             }
             break;
-        case 'reg-username':
+        case 'surname':
+            // make sure name is longer than 6 characters
+            if ( input.value.length < 3 || input.value.length > 40 ) {
+                showError( input, 'Surname must be between (6-40) charecters long' );
+            } // make sure name contains only letters including spaces
+            else if ( !input.value.match( /^[a-zA-Z\s]*$/ ) ) {
+                showError( input, 'Surname must contain only letters' );
+            } else {
+                removeError( input );
+            }
+            break;
+        case 'username':
             // make sure username is longer than 3 characters
             if ( input.value.length < 3 || input.value.length > 20 ) {
                 showError( input, 'Username must be between (3-20) charecters long' );
@@ -83,7 +83,7 @@ const validateInput = ( input ) => {
                 removeError( input );
             }
             break;
-        case 'reg-email':
+        case 'email':
             // validate email format
             if ( input.value.match( /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/ ) ) {
                 removeError( input );
@@ -120,44 +120,8 @@ const validateInput = ( input ) => {
     }
 };
 
-loginForm.addEventListener( 'submit', ( event ) => {
-    event.preventDefault();
-    console.log( 'login' );
-
-    // get username and password
-    const username = document.querySelector( '#login-username' );
-    const password = document.querySelector( '#login-password' );
-
-    // fecth data from the database on /users from API using get method
-    fetch( 'http://127.0.0.1:8080/users/', {
-        method: 'GET',
-    } )
-        .then( ( response ) => response.json() )
-        .then( ( data ) => {
-            // check if username and password match the ones in the database
-            data.forEach( ( user ) => {
-                if ( username.value == user.username && password.value == user.password ) {
-                    console.log( 'Success:', user );
-                    // hide all error messages
-                    removeError( username );
-                    removeError( password );
-
-                    storeLoginSession( user );
-
-                    window.location.href = '../user/user-dashboard.html';
-                } else {
-                    console.log( 'Invalid username or password' );
-                    showError( username, 'Invalid username or password' );
-                    showError( password, 'Invalid username or password' );
-                }
-            } );
-        } ).catch( ( error ) => {
-            console.error( 'Error:', error );
-        } );
-} );
-
 const showError = ( input, message ) => {
-    // get the cloest p tag
+    // get the closest p tag
     const formControl = input.parentElement;
     const errorMessage = formControl.querySelector( '.error-text' );
     errorMessage.innerText = message;
@@ -171,7 +135,61 @@ const removeError = ( input ) => {
     errorMessage.style.display = 'none';
 };
 
-const storeLoginSession = ( user ) => {
-    // store user id in session storage
-    sessionStorage.setItem( 'user_id', user.id );
+// update user profile
+const updateUserProfile = ( userProfile ) => {
+    // get user information
+    fetch( `http://127.0.0.1:8080/update-users?userID=${user_id}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify( userProfile ),
+    } )
+        .then( ( response ) => response.json() )
+        .then( ( data ) => {
+            // display user information
+            console.log( data );
+            alert( 'Profile updated successfully' );
+        } )
+        .catch( ( error ) => {
+            console.error( 'User Update Error:', error );
+        } );
+};
+
+// get user information
+fetch( `http://localhost:8080/users`, {
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+} )
+    .then( ( response ) => response.json() )
+    .then( ( data ) => {
+        // get user information
+        data.forEach( user => {
+            if ( user.id == user_id ) {
+                // display user information
+                console.log( user );
+                displayUserInformation( user );
+            }
+        } );
+
+    } )
+    .catch( ( error ) => {
+        console.error( 'Error:', error );
+    } );
+
+
+// display user information
+const displayUserInformation = ( user ) => {
+    // separate name and surname form full name
+    const fullname = user.fullname.split( ' ' );
+
+    // display user information
+    name.value = fullname[ 0 ];
+    surname.value = fullname[ 1 ];
+    username.value = user.username;
+    email.value = user.email;
+
+    console.log('info displayed')
 };

@@ -193,9 +193,9 @@ main {
  position: relative;
  flex-direction: column;
  gap: 10px;
- background-color: var(--lightbg-color);
+ background-color: whitesmoke;
  color: var(--darkbg-color);
- border-radius: 0 0 10px 10px;
+ border-radius: 10px 10px 10px 10px;
  padding: 15px 25px;
  width: 90%;
  height: fit-content;
@@ -231,12 +231,18 @@ main {
  object-fit: contain;
  border-radius: 20px !important;
  overflow: hidden;
+ /* background-color: #05001f; */
+}
+
+.post .post-image img {
+ height: 100%;
+ object-fit: contain;
 }
 
 .post .post-content {
  box-shadow: 0px -2px 2px 0 var(--darkbg-color);
  padding: 10px;
- border-radius: 10px;
+ border-radius: 0 0 10px 10px;
  max-height: 200px;
  overflow: hidden;
 }
@@ -299,9 +305,12 @@ main {
     display: flex;
     flex-direction: row;
     gap: 20px;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     padding: 0px 10px;
     width: 100%;
+    overflow: hidden;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 .dashboard-sidebar {
  display: flex;
@@ -380,4 +389,41 @@ main {
 .my-posts-table tbody tr td{
     border: 2px solid var(--darkbg-color);
     
+}
+
+.user-profile-header{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px 20px;
+    background-color: var(--theme-color);
+    color: var(--lightbg-color);
+    border-radius: 20px;
+    box-shadow: 3px 3px 5px 0 var(--darkbg-color);
+    overflow: hidden;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.user-profile-info{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.user-profile-info .post-insights{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    min-width: 300px;
+    flex-grow: 1;
+    background-color: var(--darkbg-color);
+    color: var(--lightbg-color);
+    font-size: 20px;
+    justify-content: center;
+    text-align: center;
+    gap: 10px;
+    padding: 10px;
+    height: fit-content;
 }

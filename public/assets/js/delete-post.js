@@ -18,7 +18,7 @@ deleteNo.addEventListener( 'click', ( e ) => {
 } );
 
 async function deletePost () {
-    const response = await fetch( `http://127.0.0.1:3000/delete-post?postID=${ postID }`, {
+    const response = await fetch( `http://127.0.0.1:8080/delete-post?postID=${ postID }`, {
         method: 'DELETE'
     } );
     const data = await response.text();
