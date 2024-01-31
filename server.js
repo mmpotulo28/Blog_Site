@@ -28,8 +28,8 @@ db.connect( ( err ) => {
 
 app.use( express.static( 'public' ) );
 
+// if method is get, fetch all users from the database
 app.get( '/users', ( req, res ) => {
-    // if method is get, fetch all users from the database
     db.query( 'SELECT * FROM Users', ( err, results ) => {
         if ( err ) throw err;
         res.json( results );
@@ -98,8 +98,6 @@ app.post( '/update-users', ( req, res ) => {
     } );
 } );
 
-
-
 app.get( '/posts', ( req, res ) => {
     db.query( 'SELECT * FROM Posts', ( err, results ) => {
         if ( err ) throw err;
@@ -136,10 +134,11 @@ app.post( '/create-post', ( req, res ) => {
     const image = req.body.image;
     const author = req.body.author;
     const author_id = req.body.author_id;
+    const category = req.body.category;
 
     db.query(
-        'INSERT INTO posts (post_title, post_content, post_image, post_author, author_id) VALUES (?, ?, ?, ?, ?)',
-        [ title, content, image, author, author_id ],
+        'INSERT INTO posts (post_title, post_content, post_image, post_author, author_id, category) VALUES (?, ?, ?, ?, ?, ?)',
+        [ title, content, image, author, author_id, category ],
         ( err, results ) => {
             if ( err ) throw err;
             console.log( 'Post added to the database: ', results );
@@ -155,10 +154,11 @@ app.post( '/update-post', ( req, res ) => {
     const image = req.body.image;
     const author = req.body.author;
     const postID = req.query.postID;
+    const category = req.body.category;
 
     db.query(
-        'UPDATE posts SET post_title = ?, post_content = ?, post_image = ?, post_author = ? WHERE id = ?',
-        [ title, content, image, author, postID ],
+        'UPDATE posts SET post_title = ?, post_content = ?, post_image = ?, post_author = ?, category = ? WHERE id = ?',
+        [ title, content, image, author,category, postID ],
         ( err, results ) => {
             if ( err ) throw err;
             console.log( 'Post updated: ', results );

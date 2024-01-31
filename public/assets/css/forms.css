@@ -220,6 +220,7 @@
  flex-direction: column;
  flex-wrap: wrap;
  justify-content: center;
+ align-items: center;
  gap: 10px;
  max-width: 90%;
  margin: 0 auto;
@@ -227,6 +228,17 @@
  width: fit-content;
  align-items: flex-start;
  flex-grow: 2;
+}
+
+.user-profile-form .form-group {
+ max-width: none;
+ width: 100%;
+ margin: auto;
+}
+
+.user-profile-form .form-group input{
+    max-width: none;
+    width: 90%;
 }
 
 .user-profile-form .form-group button {

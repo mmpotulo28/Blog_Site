@@ -10,6 +10,7 @@ const surname = document.querySelector( '#surname' );
 const username = document.querySelector( '#username' );
 const email = document.querySelector( '#email' );
 const userProfileForm = document.querySelector( '.user-profile-form' );
+const postCount = document.querySelector( '#post-count' );
 
 // update user profile
 userProfileForm.addEventListener( 'submit', ( event ) => {
@@ -193,3 +194,29 @@ const displayUserInformation = ( user ) => {
 
     console.log('info displayed')
 };
+
+
+// get all posts by author_id from the database and calculate the number of posts
+fetch( `http://127.0.0.1:8080/posts`, {
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+} )
+    .then( ( response ) => response.json() )
+    .then( ( data ) => {
+        // get post information
+        let count = 0;
+        data.forEach( post => {
+            if ( post.author_id == user_id ) {
+                count++;
+            }
+        } );
+
+        // display post count
+        postCount.innerText = count;
+
+    } )
+    .catch( ( error ) => {
+        console.error( 'Error:', error );
+    } );
