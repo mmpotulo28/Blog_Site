@@ -1,19 +1,18 @@
-const express = require( 'express' );
-const bodyParser = require( 'body-parser' );
+const express = require('express');
+const { json, urlencoded } = require('body-parser');
 const app = express();
-const cors = require( 'cors' );
+const cors = require('cors');
 const port = 8080;
 
 app.use( cors() );
-
-app.use( bodyParser.json() );
-app.use( bodyParser.urlencoded( { extended: true } ) );
+app.use( urlencoded( { extended: true } ) );
+app.use( json() );
 
 app.listen( port, () => {
     console.log( `Server is running on port ${ port }` );
 } );
 
-const mysql = require( 'mysql' );
+const mysql = require('mysql');
 const db = mysql.createConnection( {
     host: 'localhost',
     user: 'root',
@@ -106,8 +105,8 @@ app.get( '/posts', ( req, res ) => {
 } );
 
 // image upload
-const multer = require( 'multer' );
-const path = require( 'path' );
+const multer = require('multer');
+const path = require('path');
 
 const storage = multer.diskStorage( {
     destination: './public/assets/images',
