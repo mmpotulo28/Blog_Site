@@ -1,9 +1,3 @@
-// check if user is logged in
-const user_id = sessionStorage.getItem( 'user_id' );
-if ( !user_id ) {
-    window.location.href = '../login/login.html';
-}
-
 // get all elements
 const name = document.querySelector( '#name' );
 const surname = document.querySelector( '#surname' );
@@ -42,7 +36,7 @@ userProfileForm.addEventListener( 'submit', ( event ) => {
     // if there are no errors in the form
     if ( errorCount == 0 ) {
         // combine name and surname
-        userProfile.fullname = `${userProfile.name} ${userProfile.surname}`;
+        userProfile.fullname = `${ userProfile.name } ${ userProfile.surname }`;
         updateUserProfile( userProfile );
     } else {
         return;
@@ -139,7 +133,7 @@ const removeError = ( input ) => {
 // update user profile
 const updateUserProfile = ( userProfile ) => {
     // get user information
-    fetch( `http://127.0.0.1:8080/update-users?userID=${user_id}`, {
+    fetch( `http://127.0.0.1:8080/update-users?userID=${ user_id }`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -148,8 +142,6 @@ const updateUserProfile = ( userProfile ) => {
     } )
         .then( ( response ) => response.json() )
         .then( ( data ) => {
-            // display user information
-            console.log( data );
             alert( 'Profile updated successfully' );
         } )
         .catch( ( error ) => {
@@ -169,12 +161,9 @@ fetch( `http://localhost:8080/users`, {
         // get user information
         data.forEach( user => {
             if ( user.id == user_id ) {
-                // display user information
-                console.log( user );
                 displayUserInformation( user );
             }
         } );
-
     } )
     .catch( ( error ) => {
         console.error( 'Error:', error );
@@ -191,8 +180,6 @@ const displayUserInformation = ( user ) => {
     surname.value = fullname[ 1 ];
     username.value = user.username;
     email.value = user.email;
-
-    console.log('info displayed')
 };
 
 

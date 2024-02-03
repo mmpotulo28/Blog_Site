@@ -48,7 +48,6 @@ createPostForm.addEventListener( 'submit', async ( e ) => {
             data.forEach( user => {
                 if ( user.id == user_id ) {
                     post.author = user.username;
-                    console.log( post.author );
                     return;
                 }
             } );
@@ -61,7 +60,6 @@ createPostForm.addEventListener( 'submit', async ( e ) => {
         method: 'POST',
         body: formData
     } ).then( response => response.text() ).then( data => {
-        console.log( data );
     } ).catch( error => {
         throw new Error( error );
     } );
@@ -80,7 +78,6 @@ async function sendPost ( post ) {
             body: JSON.stringify( post )
         } );
         const data = await response.text();
-        console.log( data );
         // window.location.href = './my-posts.html';
         window.location.reload();
         return;

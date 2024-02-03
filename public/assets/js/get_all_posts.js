@@ -1,11 +1,9 @@
-import { headlineAnimation } from "./main.js";
 const mainColumn = document.querySelector( '.main-column' );
-const latestHeadlines = document.querySelector( '.latest-headlines' );
 const categories = document.querySelector( '.categories' );
 const topAuthors = document.querySelector( '.top-authors' );
 
 function createPost ( post ) {
-    // seperate time and date from created_at
+    // separate time and date from created_at
     const date = post.created_at.split( 'T' )[ 0 ];
     const time = post.created_at.split( 'T' )[ 1 ].split( '.' )[ 0 ];
 
@@ -15,7 +13,7 @@ function createPost ( post ) {
       ><h3>${ post.post_title }</h3></a
      >
      <div class="post-labels">
-      <p class="post-caregoty">What's Hot</p>
+      <p class="post-category">What's Hot</p>
       <p class="post-category">${ post.category }</p>
       <p class="post-time">${ date } | ${ time }</p>
       <p class="post-author">${ post.post_author }</p>
@@ -33,14 +31,9 @@ function createPost ( post ) {
     mainColumn.innerHTML += postContainer;
 }
 
-function setHeadlines ( title ) {
-    latestHeadlines.innerHTML += `
-    <li>${ title }</li>`;
-}
-
-const allPosts = [];
-const categoriesArray = [];
-const authorsArray = [];
+let allPosts = [];
+let categoriesArray = [];
+let authorsArray = [];
 
 // Fetch all posts from the API
 await fetch( 'http://localhost:8080/posts' )
@@ -51,18 +44,14 @@ await fetch( 'http://localhost:8080/posts' )
         } );
 
         sortAllPosts();
-        console.log( allPosts );
         // display all posts
         allPosts.forEach( post => {
             createPost( post );
-            setHeadlines( post.post_title );
         } );
 
         // start headline animation
-        getAllCategories();
+        categoriesArray = getAllCategories();
         setTopAuthors();
-        headlineAnimation();
-
     } )
     .catch( error => {
         throw new Error( 'Error:', error );
@@ -93,6 +82,8 @@ function getAllCategories () {
         <a href="#">${ category }</a>
         `;
     } );
+
+    return categoriesArray;
 }
 
 function setTopAuthors () {

@@ -6,6 +6,8 @@
   "scripts": {
     "test": "jasmine"
   },
+  "type": "module",
+  
   "repository": {
     "type": "git",
     "url": "git@https://github.com/mmpotulo28/Blog_Site.git"

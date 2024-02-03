@@ -22,6 +22,5 @@ async function deletePost () {
         method: 'DELETE'
     } );
     const data = await response.text();
-    console.log( data );
     window.location.href = './my-posts.html';
 }

@@ -1,6 +1,5 @@
 // get table tbody element from html
 const tbody = document.querySelector( 'tbody' );
-const user_id = sessionStorage.getItem( 'user_id' );
 
 // get all posts from the database
 fetch( `http://127.0.0.1:8080/posts` )
