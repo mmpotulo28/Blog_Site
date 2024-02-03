@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="../../assets/css/style.css" />
   <link rel="stylesheet" href="../../assets/css/forms.css" />
+  <link rel="stylesheet" href="../../assets/css/contact.css">
+  <link rel="stylesheet" href="../../assets/css/responsive.css">
   <title>Cape Blog | Home</title>
  </head>
  <body>
@@ -32,7 +34,79 @@
   </header>
 
   <main>
-   <div class="main-column"> </div>
+   <div class="main-column">
+     <!-- contact section -->
+   <section id="contacts" class="body-section">
+    <div class="section-content">
+     <div class="contact-card">
+      <div class="contact-info">
+       <h2 class="contact-heading">Contact Info</h2>
+       <div class="contact-info-content">
+        <p> <i class="fas fa-phone"></i>079 653 0453 </p>
+        <p> <i class="fas fa-envelope"></i>mpotulom28@gmail.com</p>
+        <p>
+         <i class="fas fa-map-marker-alt"></i>37 Durban Rd, Bellville, Western
+         Cape, 7530
+        </p>
+       </div>
+       <div class="social-media-content">
+        <a target="_blank" href="https://Instagram.com/dj_mnesh"
+         ><i class="fa fa-instagram"></i>Instagram</a
+        >
+        <a target="_blank" href="https://github.com/mmpotulo28"
+         ><i class="fa fa-github"></i>GitHub</a
+        >
+        <a target="_blank" href="https://linkedin.com/in/mmpotulo"
+         ><i class="fa fa-linkedin"></i>LinkedIn</a
+        >
+       </div>
+      </div>
+      <div class="contact-form">
+       <h2 class="contact-heading">Send a Message</h2>
+       <form id="contacts-form">
+        <div class="form-group">
+         <label for="contact-name">Name</label>
+         <input
+          type="text"
+          id="contact-name"
+          placeholder="Enter your name"
+          required
+         >
+         <p class="error-text" id="name-error"></p>
+        </div>
+        <div class="form-group">
+         <label for="contact-email">Email</label>
+         <input
+          type="email"
+          id="contact-email"
+          placeholder="Enter your email"
+          required
+         >
+         <p class="error-text" id="email-error"></p>
+        </div>
+        <div class="form-group">
+         <label for="contact-message">Message</label>
+         <textarea
+          name="message"
+          id="contact-message"
+          cols="30"
+          rows="10"
+          placeholder="Enter your message"
+          required
+         ></textarea>
+        </div>
+        <button type="submit" class="btn">Send</button>
+       </form>
+      </div>
+     </div>
+    </div>
+   </section>
+
+   <div class="loader-pop-up">
+    <div class="loader-icon"><i class="fa fa-spinner"></i></div>
+    <div class="loader message">Loading…</div>
+   </div>    
+</div>
    <div class="sidebar">
     <div class="categories sidebar-sec">
      <h1 class="sec-heading">Category</h1>
@@ -78,5 +152,9 @@
   </footer>
 
   <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/contact.js"></script>
+  <script src="https://kit.fontawesome.com/6d3b596002.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+  <script>(function () {emailjs.init('o24mx-l8WjlWOujcE');})();</script>
  </body>
 </html>

@@ -221,22 +221,27 @@ main {
  padding-bottom: 10px;
 }
 
-.post .post-image {
+
+.post .post-images {
  display: flex;
+ position: relative;
+ flex-direction: row;
+ gap: 10px;
  justify-content: center;
  align-items: center;
- max-height: 300px;
- width: auto;
+ flex-wrap: nowrap;
+ max-height: 300px !important;
+ overflow-y: hidden;
+ overflow-x: auto;
+ justify-content: center;
+ align-items: center;
  max-width: 100%;
- object-fit: contain;
- border-radius: 20px !important;
- overflow: hidden;
- /* background-color: #05001f; */
 }
 
-.post .post-image img {
- height: 100%;
- object-fit: contain;
+.post .post-images img{
+    max-height: 300px;
+    max-width: 100%;
+    object-fit: contain;
 }
 
 .post .post-content {

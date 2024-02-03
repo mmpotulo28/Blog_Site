@@ -117,12 +117,14 @@ const storage = multer.diskStorage( {
 
 const upload = multer( {
     storage: storage
-} ).single( 'image' );
+} ).array( 'images', 10 ); // Allow up to 10 images to be uploaded
 
 app.post( '/upload', ( req, res ) => {
     upload( req, res, ( err ) => {
         if ( err ) throw err;
-        res.send( 'Image uploaded' );
+        const images = req.files.map(file => file.originalname).join(','); // Get the original names of the uploaded files and join them with a comma
+        res.send( 'Images uploaded', images );
+        // Insert the images into the database here
     } );
 } );
 
@@ -130,14 +132,14 @@ app.post( '/upload', ( req, res ) => {
 app.post( '/create-post', ( req, res ) => {
     const title = req.body.title;
     const content = req.body.content;
-    const image = req.body.image;
     const author = req.body.author;
     const author_id = req.body.author_id;
     const category = req.body.category;
+    const images = req.body.images;
 
     db.query(
         'INSERT INTO posts (post_title, post_content, post_image, post_author, author_id, category) VALUES (?, ?, ?, ?, ?, ?)',
-        [ title, content, image, author, author_id, category ],
+        [ title, content, images, author, author_id, category ],
         ( err, results ) => {
             if ( err ) throw err;
             console.log( 'Post added to the database: ', results );
@@ -147,24 +149,24 @@ app.post( '/create-post', ( req, res ) => {
 } );
 
 // update post
-app.post( '/update-post', ( req, res ) => {
+app.post('/update-post', (req, res) => {
     const title = req.body.title;
     const content = req.body.content;
-    const image = req.body.image;
+    const images = req.body.images;
     const author = req.body.author;
     const postID = req.query.postID;
     const category = req.body.category;
 
     db.query(
         'UPDATE posts SET post_title = ?, post_content = ?, post_image = ?, post_author = ?, category = ? WHERE id = ?',
-        [ title, content, image, author,category, postID ],
-        ( err, results ) => {
-            if ( err ) throw err;
-            console.log( 'Post updated: ', results );
-            res.send( 'Post updated' );
+        [title, content, images, author, category, postID],
+        (err, results) => {
+            if (err) throw err;
+            console.log('Post updated: ', results);
+            res.send('Post updated');
         }
     );
-} );
+});
 
 // delete post
 app.delete( '/delete-post', ( req, res ) => {

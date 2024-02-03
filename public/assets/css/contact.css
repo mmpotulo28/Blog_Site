@@ -1,0 +1,141 @@
+/* contact section */
+#contacts {
+ border-bottom: none;
+}
+.contact-card {
+ background: linear-gradient(var(--lightbg-color) 80%, var(--darkbg-color));
+ border-radius: 20px;
+ position: relative;
+ display: grid;
+ grid-template-columns: 1fr 1fr;
+ padding: 20px;
+ width: calc(100%-40px);
+ max-width: 90%;
+ gap: 20px;
+ color: var(--darkbg-color);
+ font-size: 18px;
+ margin: auto;
+}
+
+.contact-heading {
+ color: var(--theme-color);
+ text-align: center;
+}
+
+.contact-info .contact-info-content .fas {
+ margin-right: 5px;
+}
+
+.contact-form .form-group {
+ display: grid;
+ grid-template-columns: auto;
+ width: 100%;
+}
+
+.contact-form button {
+ background-color: var(--theme-color);
+ color: white;
+ font-size: 19px;
+ padding: 5px 10px;
+ margin: 20px auto;
+ border-radius: 10px;
+}
+
+.contact-form button:hover {
+ background-color: var(--darkbg-color);
+ box-shadow: 1px 1px 5px 3px var(--theme-color);
+ font-weight: bold;
+ border: none;
+ scale: 1.1;
+}
+
+.contact-form .form-group input {
+ margin: 5px 0 10px 0px;
+ height: 20px;
+ border-radius: 10px;
+ padding: 10px 5px;
+ width: auto;
+}
+
+.contact-form .form-group textarea {
+ border-radius: 10px;
+ padding: 10px;
+}
+
+.contact-info {
+ display: grid;
+ border-right: 2px solid var(--theme-color);
+ padding-right: 20px;
+ grid-template-columns: 1fr;
+ padding: 0 10px;
+ text-wrap: wrap;
+}
+
+.contact-card .social-media-content {
+ display: grid;
+ gap: 17px;
+ grid-template-columns: 1fr;
+ text-wrap: wrap;
+ border-top: 1px solid var(--theme-color);
+ padding-top: 20px;
+ border-radius: 0 20px 0 0;
+ margin-top: 20px;
+ width: 100%;
+}
+
+.contact-card .social-media-content a {
+ color: var(--theme-color);
+ font-size: 17px;
+ text-decoration: none;
+ text-wrap: nowrap;
+ width: fit-content;
+}
+
+.contact-card .social-media-content a:hover {
+ color: blue;
+ font-weight: bold;
+}
+
+.contact-card .social-media-content a i {
+ margin-right: 5px;
+}
+
+.error-text {
+ display: none;
+ color: red;
+ margin: 0 0 10px 0;
+}
+
+.loader-pop-up{
+    display: flex;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    top: 40%;
+    right: 50%;
+    transform: translate(50%, 20%);
+    background-color: var(--darkbg-color);
+    width: fit-content;
+    height: fit-content;
+    padding: 20px;
+    flex-wrap: nowrap;
+    font-size: 25px;
+}
+
+.loader-pop-up .loader-icon i{
+    color: var(--theme-color);
+}
+
+.rotateAnimation {
+    animation: rotate 2s linear infinite;
+}
+
+/* set icon rotation using keyFrames */
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

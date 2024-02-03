@@ -14,7 +14,7 @@ if ( postID ) {
     fetch( `http://127.0.0.1:8080/posts` )
         .then( ( response ) => response.json() )
         .then( ( data ) => {
-            data.forEach( post => {
+            data.forEach( ( post ) => {
                 if ( post.id == postID ) {
                     title.value = post.post_title;
                     content.value = post.post_content;
@@ -31,21 +31,32 @@ createPostForm.addEventListener( 'submit', async ( e ) => {
 
     const user_id = sessionStorage.getItem( 'user_id' );
 
+    const images = Array.from( image.files ).map( ( file ) => {
+        return {
+            name: file.name,
+            path: `./assets/images/${ file.name }`,
+        };
+    } );
+
+    let imageString = ' ';
+    images.forEach( ( img ) => {
+        imageString += img.path + ',';
+    } );
+
     const post = {
         title: title.value.substring( 0, 1 ).toUpperCase() + title.value.substring( 1 ),
         content: content.value.substring( 0, 1 ).toUpperCase() + content.value.substring( 1 ),
         category: category.value.substring( 0, 1 ).toUpperCase() + category.value.substring( 1 ),
         author: '',
         author_id: user_id,
-        image: image.value.split( '\\' ).pop().length > 0 ? `./assets/images/${ image.value.split( '\\' ).pop() }` : './assets/images/default.png',
+        images: imageString,
     };
 
     // get author from users table using the user_id from sessionStorage
-
     await fetch( `http://127.0.0.1:8080/users` )
         .then( ( response ) => response.json() )
         .then( ( data ) => {
-            data.forEach( user => {
+            data.forEach( ( user ) => {
                 if ( user.id == user_id ) {
                     post.author = user.username;
                     return;
@@ -53,16 +64,24 @@ createPostForm.addEventListener( 'submit', async ( e ) => {
             } );
         } );
 
-    // upload the image to the folder assets/images/
+    // upload the images to the folder assets/images/
     const formData = new FormData();
-    formData.append( 'image', image.files[ 0 ] );
+    Array.from( image.files ).forEach( ( file ) => {
+        formData.append( 'images', file );
+    } );
+
     fetch( 'http://127.0.0.1:8080/upload', {
         method: 'POST',
-        body: formData
-    } ).then( response => response.text() ).then( data => {
-    } ).catch( error => {
-        throw new Error( error );
-    } );
+        body: formData,
+    } )
+        .then( ( response ) => response.text() )
+        .then( ( data ) => {
+            // handle success or error response
+            console.log( "images:", data );
+        } )
+        .catch( ( error ) => {
+            throw new Error( error );
+        } );
 
     // send the post to the server
     sendPost( post );
@@ -79,7 +98,7 @@ async function sendPost ( post ) {
         } );
         const data = await response.text();
         // window.location.href = './my-posts.html';
-        window.location.reload();
+        // window.location.reload();
         return;
     } else {
         try {

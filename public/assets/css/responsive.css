@@ -28,3 +28,33 @@
   background-color: var(--darkbg-color);
  }
 }
+
+
+/* media query */
+@media (max-width: 650px) {
+ .contact-card {
+  display: grid;
+  grid-template-columns: 1fr;
+ }
+
+ .contact-card{
+    max-width: 70%;
+    min-width: 300px;
+    margin: auto;
+ }
+
+ .contact-card .contact-info {
+  border-right: none;
+  border-bottom: 2px solid var(--secondary-color);
+  padding-bottom: 30px;
+ }
+
+ .contact-card .contact-info .social-media-content {
+  border-top: none;
+ }
+
+ .contact-card .contact-form button {
+  display: block;
+  margin: 20px auto;
+ }
+}
