@@ -7,7 +7,7 @@ function createPost ( post ) {
     const date = post.created_at.split( 'T' )[ 0 ];
     const time = post.created_at.split( 'T' )[ 1 ].split( '.' )[ 0 ];
     // limit the post content to 200 characters and add'...' at the end
-    const postContent = post.post_content
+    const postContent = post.post_content;
 
     // get images and separate them with a comma if there are more than one
     let image = post.post_image;
@@ -15,8 +15,13 @@ function createPost ( post ) {
         image = image.split( ',' );
     }
 
-    console.log( "images:", image );
+    let comments = 0;
 
+    if ( post.comment_id.includes( ',' ) ) {
+        comments = post.comment_id.split( ',' ).length;
+    } else {
+        comments = post.comment_id.length;
+    }
 
     const postContainer = `
 <div class="post">
@@ -33,6 +38,12 @@ function createPost ( post ) {
      </div>
      
      <p class="post-content">${ postContent }</p>
+
+    <div class="post-insights">
+        <button id="like-btn"><i class="fas fa-thumbs-up"></i> ${ post.likes }</button>
+        <button id="comment-btn"><i class="fas fa-comment"></i> ${ comments }</button>
+        <button id="view-btn"><i class="fas fa-eye"></i> ${ post.views }</button>
+    </div>
     </div>
 `;
 
@@ -59,3 +70,42 @@ const getData = async () => {
 };
 
 document.addEventListener( 'DOMContentLoaded', getData );
+
+// handle liking and commenting button
+mainColumn.addEventListener( 'click', ( e ) => {
+    if ( e.target.id === 'like-btn' ) {
+        likePost( postID, e.target );
+    } else if ( e.target.id === 'comment-btn' ) {
+        commentOnPost( postID );
+    }
+} );
+
+async function likePost ( postID, btn ) {
+    loader.style.display = 'flex';
+    const user_id = sessionStorage.getItem( 'user_id' );
+    let likes = parseInt( btn.textContent.trim() );
+
+    // add or remove like
+    if ( btn.classList.contains( 'liked' ) ) {
+        likes--;
+        btn.classList.remove( 'liked' );
+    } else {
+        likes++;
+        btn.classList.add( 'liked' );
+    }
+
+    btn.innerHTML = `<i class="fas fa-thumbs-up"></i> ${ likes }`;
+
+    try {
+        await fetch( `http://127.0.0.1:8080/like-post?postID=${ postID }&likes=${ likes }`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        } );
+    } catch ( error ) {
+        throw new Error( 'Error:', error );
+    }
+
+    loader.style.display = 'none';
+}

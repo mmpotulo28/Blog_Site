@@ -17,6 +17,21 @@ function createPost ( post ) {
         image = image.split( ',' );
     }
 
+    let likes = 0, comments = 0, views = 0;
+    if ( post.likes_id.includes( ',' ) ) {
+        likes = post.likes_id.split( ',' ).length;
+    } else {
+        likes = post.likes_id.length;
+    }
+
+    if ( post.comment_id.includes( ',' ) ) {
+        comments = post.comment_id.split( ',' ).length;
+    } else {
+        comments = post.comment_id.length;
+    }
+
+    views = post.views;
+
     const postContainer = `
 <div class="post">
      <a href="./pages/view-post.html?postID=${ post.id }" class="post-title"><h3>${ post.post_title }</h3></a>
@@ -31,8 +46,13 @@ function createPost ( post ) {
      ${ Array.isArray( image ) ? image.map( img => `<img src="${ img }" alt="" class="post-image" />` ).join( '' ) : `<img src="${ image }" alt="" class="post-image" />` }
      </div>
      
-     <p class="post-content">${ postContent } <a href="./pages/view-post.html?postID=${ post.id }" class="post-content-readmore"
-      >  Read more</a></p>
+     <p class="post-content">${ postContent } <a href="./pages/view-post.html?postID=${ post.id }" class="post-content-readmore">  Read more</a></p>
+
+    <div class="post-insights">
+        <p><i class="fas fa-thumbs-up"></i> ${ likes }</p>
+        <p><i class="fas fa-comments"></i> ${ comments }</p>
+        <p><i class="fas fa-eye"></i> ${ views }</p>
+    </div>
     </div>
 `;
 
