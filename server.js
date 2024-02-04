@@ -12,27 +12,42 @@ app.listen( port, () => {
     console.log( `Server is running on port ${ port }` );
 } );
 
-const mysql = require('mysql');
-const db = mysql.createConnection( {
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'blogsite'
-} );
+const sql = require('mssql');
 
-db.connect( ( err ) => {
-    if ( err ) throw err;
-    console.log( 'Connected to the database!' );
+const config = {
+    user: 'blogsite_asmin',
+    password: 'Manelisi@22',
+    server: "mysqlblogserver.database.windows.net",
+    database: 'flaze_blog',
+    port: 1433,
+    options: {
+        encrypt: true // Use this if you're on Windows Azure
+    }
+};
+
+sql.connect(config, function (err) {
+    if ( err ) throw new Error( err );
+    console.log( 'Connected to the database' );
+    
 } );
 
 app.use( express.static( 'public' ) );
 
 // if method is get, fetch all users from the database
 app.get( '/users', ( req, res ) => {
-    db.query( 'SELECT * FROM Users', ( err, results ) => {
-        if ( err ) throw err;
-        res.json( results );
-    } );
+    const pool = new sql.ConnectionPool(config);
+    pool.connect().then(() => {
+        const request = new sql.Request(pool);
+        request.query('SELECT * FROM Users').then((result) => {
+            res.json(result.recordset);
+        }).catch((err) => {
+            throw err;
+        }).finally(() => {
+            pool.close();
+        });
+    }).catch((err) => {
+        throw err;
+    });
 } );
 
 // if method is post, add a new user to the database
@@ -45,42 +60,78 @@ app.post( '/users', ( req, res ) => {
 
     // check if the username already exists in the database
     let checks = 0;
-    db.query( 'SELECT * FROM Users WHERE username = ?', [ username ], ( err, results ) => {
-        if ( err ) throw err;
-        if ( results.length > 0 ) {
-            checks++;
-            console.log( 'Username already exists' );
-            res.send( 'Username already exists' );
-        }
-    } );
+    const pool = new sql.ConnectionPool(config);
+    pool.connect().then(() => {
+        const request = new sql.Request(pool);
+        request.query('SELECT * FROM Users WHERE username = ?', [ username ]).then((result) => {
+            if (result.recordset.length > 0) {
+                checks++;
+                console.log('Username already exists');
+                res.send('Username already exists');
+            }
+        }).catch((err) => {
+            throw err;
+        }).finally(() => {
+            pool.close();
+        });
+    }).catch((err) => {
+        throw err;
+    });
 
     // check if the email already exists in the database
-    db.query( 'SELECT * FROM Users WHERE email = ?', [ email ], ( err, results ) => {
-        if ( err ) throw err;
-        if ( results.length > 0 ) {
-            checks++;
-            console.log( 'Email already exists' );
-            res.send( 'Email already exists' );
-        }
-    } );
+    const pool2 = new sql.ConnectionPool(config);
+    pool2.connect().then(() => {
+        const request = new sql.Request(pool2);
+        request.query('SELECT * FROM Users WHERE email = ?', [ email ]).then((result) => {
+            if (result.recordset.length > 0) {
+                checks++;
+                console.log('Email already exists');
+                res.send('Email already exists');
+            }
+        }).catch((err) => {
+            throw err;
+        }).finally(() => {
+            pool2.close();
+        });
+    }).catch((err) => {
+        throw err;
+    });
 
     // check if the number already exists in the database
-    db.query( 'SELECT * FROM Users WHERE phoneNumber = ?', [ number ], ( err, results ) => {
-        if ( err ) throw err;
-        if ( results.length > 0 ) {
-            checks++;
-            console.log( 'Number already exists' );
-            res.send( 'Number already exists' );
-        }
-    } );
+    const pool3 = new sql.ConnectionPool(config);
+    pool3.connect().then(() => {
+        const request = new sql.Request(pool3);
+        request.query('SELECT * FROM Users WHERE phoneNumber = ?', [ number ]).then((result) => {
+            if (result.recordset.length > 0) {
+                checks++;
+                console.log('Number already exists');
+                res.send('Number already exists');
+            }
+        }).catch((err) => {
+            throw err;
+        }).finally(() => {
+            pool3.close();
+        });
+    }).catch((err) => {
+        throw err;
+    });
 
     // if the username, email and number are unique, add the user to the database
-    if ( checks == 0 ) {
-        db.query( 'INSERT INTO Users (username, password, fullname, email, number) VALUES (?, ?, ?, ?, ?)', [ username, password, fullname, email, number ], ( err, results ) => {
-            if ( err ) throw err;
-            console.log( 'User added to the database: ', results );
-            res.send( 'User added to the database' );
-        } );
+    if (checks == 0) {
+        const pool4 = new sql.ConnectionPool(config);
+        pool4.connect().then(() => {
+            const request = new sql.Request(pool4);
+            request.query('INSERT INTO Users (username, password, fullname, email, number) VALUES (?, ?, ?, ?, ?)', [ username, password, fullname, email, number ]).then((result) => {
+                console.log('User added to the database: ', result);
+                res.send('User added to the database');
+            }).catch((err) => {
+                throw err;
+            }).finally(() => {
+                pool4.close();
+            });
+        }).catch((err) => {
+            throw err;
+        });
     }
 } );
 
@@ -90,18 +141,36 @@ app.post( '/update-users', ( req, res ) => {
     const fullname = req.body.fullname;
     const email = req.body.email;
 
-    db.query( 'UPDATE Users SET username = ?, fullname = ?, email = ? WHERE id = ?', [ username, fullname, email, id ], ( err, results ) => {
-        if ( err ) throw err;
-        console.log( 'User updated: ', results );
-        res.json( { message: 'updated' } );
-    } );
+    const pool = new sql.ConnectionPool(config);
+    pool.connect().then(() => {
+        const request = new sql.Request(pool);
+        request.query('UPDATE Users SET username = ?, fullname = ?, email = ? WHERE id = ?', [ username, fullname, email, id ]).then((result) => {
+            console.log('User updated: ', result);
+            res.json({ message: 'updated' });
+        }).catch((err) => {
+            throw err;
+        }).finally(() => {
+            pool.close();
+        });
+    }).catch((err) => {
+        throw err;
+    });
 } );
 
 app.get( '/posts', ( req, res ) => {
-    db.query( 'SELECT * FROM Posts', ( err, results ) => {
-        if ( err ) throw err;
-        res.json( results );
-    } );
+    const pool = new sql.ConnectionPool(config);
+    pool.connect().then(() => {
+        const request = new sql.Request(pool);
+        request.query('SELECT * FROM Posts').then((result) => {
+            res.json(result.recordset);
+        }).catch((err) => {
+            throw err;
+        }).finally(() => {
+            pool.close();
+        });
+    }).catch((err) => {
+        throw err;
+    });
 } );
 
 // image upload
@@ -137,15 +206,20 @@ app.post( '/create-post', ( req, res ) => {
     const category = req.body.category;
     const images = req.body.images;
 
-    db.query(
-        'INSERT INTO posts (post_title, post_content, post_image, post_author, author_id, category) VALUES (?, ?, ?, ?, ?, ?)',
-        [ title, content, images, author, author_id, category ],
-        ( err, results ) => {
-            if ( err ) throw err;
-            console.log( 'Post added to the database: ', results );
-            res.send( 'Post added to the database' );
-        }
-    );
+    const pool = new sql.ConnectionPool(config);
+    pool.connect().then(() => {
+        const request = new sql.Request(pool);
+        request.query('INSERT INTO posts (post_title, post_content, post_image, post_author, author_id, category) VALUES (?, ?, ?, ?, ?, ?)', [ title, content, images, author, author_id, category ]).then((result) => {
+            console.log('Post added to the database: ', result);
+            res.send('Post added to the database');
+        }).catch((err) => {
+            throw err;
+        }).finally(() => {
+            pool.close();
+        });
+    }).catch((err) => {
+        throw err;
+    });
 } );
 
 // update post
@@ -157,24 +231,38 @@ app.post('/update-post', (req, res) => {
     const postID = req.query.postID;
     const category = req.body.category;
 
-    db.query(
-        'UPDATE posts SET post_title = ?, post_content = ?, post_image = ?, post_author = ?, category = ? WHERE id = ?',
-        [title, content, images, author, category, postID],
-        (err, results) => {
-            if (err) throw err;
-            console.log('Post updated: ', results);
+    const pool = new sql.ConnectionPool(config);
+    pool.connect().then(() => {
+        const request = new sql.Request(pool);
+        request.query('UPDATE posts SET post_title = ?, post_content = ?, post_image = ?, post_author = ?, category = ? WHERE id = ?', [title, content, images, author, category, postID]).then((result) => {
+            console.log('Post updated: ', result);
             res.send('Post updated');
-        }
-    );
+        }).catch((err) => {
+            throw err;
+        }).finally(() => {
+            pool.close();
+        });
+    }).catch((err) => {
+        throw err;
+    });
 });
 
 // delete post
 app.delete( '/delete-post', ( req, res ) => {
     const postID = req.query.postID;
 
-    db.query( 'DELETE FROM posts WHERE id = ?', [ postID ], ( err, results ) => {
-        if ( err ) throw err;
-        console.log( 'Post deleted: ', results );
-        res.send( 'Post deleted' );
-    } );
+    const pool = new sql.ConnectionPool(config);
+    pool.connect().then(() => {
+        const request = new sql.Request(pool);
+        request.query('DELETE FROM posts WHERE id = ?', [ postID ]).then((result) => {
+            console.log('Post deleted: ', result);
+            res.send('Post deleted');
+        }).catch((err) => {
+            throw err;
+        }).finally(() => {
+            pool.close();
+        });
+    }).catch((err) => {
+        throw err;
+    });
 } );
