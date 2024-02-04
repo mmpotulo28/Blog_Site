@@ -18,11 +18,6 @@ function createPost ( post ) {
     }
 
     let likes = 0, comments = 0, views = 0;
-    if ( post.likes_id.includes( ',' ) ) {
-        likes = post.likes_id.split( ',' ).length;
-    } else {
-        likes = post.likes_id.length;
-    }
 
     if ( post.comment_id.includes( ',' ) ) {
         comments = post.comment_id.split( ',' ).length;
@@ -31,6 +26,7 @@ function createPost ( post ) {
     }
 
     views = post.views;
+    likes = post.likes
 
     const postContainer = `
 <div class="post">
