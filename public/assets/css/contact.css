@@ -105,37 +105,3 @@
  color: red;
  margin: 0 0 10px 0;
 }
-
-.loader-pop-up{
-    display: flex;
-    position: fixed;
-    justify-content: center;
-    align-items: center;
-    top: 40%;
-    right: 50%;
-    transform: translate(50%, 20%);
-    background-color: var(--darkbg-color);
-    width: fit-content;
-    height: fit-content;
-    padding: 20px;
-    flex-wrap: nowrap;
-    font-size: 25px;
-}
-
-.loader-pop-up .loader-icon i{
-    color: var(--theme-color);
-}
-
-.rotateAnimation {
-    animation: rotate 2s linear infinite;
-}
-
-/* set icon rotation using keyFrames */
-@keyframes rotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}

@@ -82,18 +82,3 @@ async function sendEmail ( formData ) {
         throw new Error( error );
     }
 }
-
-// animate loader icon
-animateLoaderIcon();
-function animateLoaderIcon () {
-    // get display of loader from css
-    const dis = window.getComputedStyle( loader ).display;
-
-    if ( dis === 'flex' ) {
-        loaderIcon.classList.add( 'rotateAnimation' );
-    } else {
-        loaderIcon.classList.remove( 'rotateAnimation' );
-    }
-
-    requestAnimationFrame( animateLoaderIcon );
-}

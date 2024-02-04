@@ -1,4 +1,6 @@
 const latestHeadlines = document.querySelector( '.latest-headlines' );
+const loader = document.querySelector( '.loader-pop-up' );
+const loaderIcon = document.querySelector( '.loader-pop-up .loader-icon i' );
 
 function headlineAnimation () {
     // Get the container element that holds the headlines

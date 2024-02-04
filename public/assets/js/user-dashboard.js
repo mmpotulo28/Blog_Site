@@ -5,6 +5,7 @@ const username = document.querySelector( '#username' );
 const email = document.querySelector( '#email' );
 const userProfileForm = document.querySelector( '.user-profile-form' );
 const postCount = document.querySelector( '#post-count' );
+const user_id = sessionStorage.getItem( 'user_id' );
 
 // update user profile
 userProfileForm.addEventListener( 'submit', ( event ) => {
@@ -131,9 +132,10 @@ const removeError = ( input ) => {
 };
 
 // update user profile
-const updateUserProfile = ( userProfile ) => {
+const updateUserProfile = async ( userProfile ) => {
     // get user information
-    fetch( `http://127.0.0.1:8080/update-users?userID=${ user_id }`, {
+    loader.style.display = 'flex';
+    await fetch( `http://127.0.0.1:8080/update-users?userID=${ user_id }`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -142,33 +144,13 @@ const updateUserProfile = ( userProfile ) => {
     } )
         .then( ( response ) => response.json() )
         .then( ( data ) => {
+            loader.style.display = 'none';
             alert( 'Profile updated successfully' );
         } )
         .catch( ( error ) => {
             console.error( 'User Update Error:', error );
         } );
 };
-
-// get user information
-fetch( `http://localhost:8080/users`, {
-    method: 'GET',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-} )
-    .then( ( response ) => response.json() )
-    .then( ( data ) => {
-        // get user information
-        data.forEach( user => {
-            if ( user.id == user_id ) {
-                displayUserInformation( user );
-            }
-        } );
-    } )
-    .catch( ( error ) => {
-        console.error( 'Error:', error );
-    } );
-
 
 // display user information
 const displayUserInformation = ( user ) => {
@@ -184,26 +166,54 @@ const displayUserInformation = ( user ) => {
 
 
 // get all posts by author_id from the database and calculate the number of posts
-fetch( `http://127.0.0.1:8080/posts`, {
-    method: 'GET',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-} )
-    .then( ( response ) => response.json() )
-    .then( ( data ) => {
-        // get post information
-        let count = 0;
-        data.forEach( post => {
-            if ( post.author_id == user_id ) {
-                count++;
-            }
+
+const getData = async () => {
+    loader.style.display = 'flex';
+
+    await fetch( `http://localhost:8080/users`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    } )
+        .then( ( response ) => response.json() )
+        .then( ( data ) => {
+            // get user information
+            data.forEach( user => {
+                if ( user.id == user_id ) {
+                    displayUserInformation( user );
+                }
+            } );
+        } )
+        .catch( ( error ) => {
+            console.error( 'Error:', error );
+            loader.style.display = 'none';
+        } );
+    
+    await fetch( `http://127.0.0.1:8080/posts`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    } )
+        .then( ( response ) => response.json() )
+        .then( ( data ) => {
+            // get post information
+            let count = 0;
+            data.forEach( post => {
+                if ( post.author_id == user_id ) {
+                    count++;
+                }
+            } );
+
+            // display post count
+            postCount.innerText = count;
+        } )
+        .catch( ( error ) => {
+            console.error( 'Error:', error );
         } );
 
-        // display post count
-        postCount.innerText = count;
+    loader.style.display = 'none';
+};
 
-    } )
-    .catch( ( error ) => {
-        console.error( 'Error:', error );
-    } );
+document.addEventListener( 'DOMContentLoaded', getData );

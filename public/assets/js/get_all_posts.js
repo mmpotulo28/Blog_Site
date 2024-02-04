@@ -1,6 +1,8 @@
 const mainColumn = document.querySelector( '.main-column' );
 const categories = document.querySelector( '.categories' );
 const topAuthors = document.querySelector( '.top-authors' );
+const loader = document.querySelector( '.loader-pop-up' );
+const loaderIcon = document.querySelector( '.loader-pop-up .loader-icon i' );
 
 function createPost ( post ) {
     // separate time and date from created_at
@@ -45,27 +47,33 @@ let categoriesArray = [];
 let authorsArray = [];
 
 // Fetch all posts from the API
-await fetch( 'http://localhost:8080/posts' )
-    .then( response => response.json() )
-    .then( posts => {
-        posts.forEach( post => {
-            allPosts.push( post );
+const getPosts = async () => {
+    loader.style.display = 'flex';
+    await fetch( 'http://localhost:8080/posts' )
+        .then( response => response.json() )
+        .then( posts => {
+            posts.forEach( post => {
+                allPosts.push( post );
+            } );
+
+            sortAllPosts();
+            // display all posts
+            allPosts.forEach( post => {
+                createPost( post );
+            } );
+
+            // start headline animation
+            categoriesArray = getAllCategories();
+            setTopAuthors();
+        } )
+        .catch( error => {
+            throw new Error( 'Error:', error );
         } );
+    
+    loader.style.display = 'none';
+};
 
-        sortAllPosts();
-        // display all posts
-        allPosts.forEach( post => {
-            createPost( post );
-        } );
-
-        // start headline animation
-        categoriesArray = getAllCategories();
-        setTopAuthors();
-    } )
-    .catch( error => {
-        throw new Error( 'Error:', error );
-    } );
-
+document.addEventListener( 'DOMContentLoaded', getPosts );
 
 // sort all post
 function sortAllPosts () {

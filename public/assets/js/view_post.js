@@ -1,4 +1,6 @@
 const mainColumn = document.querySelector( '.main-column' );
+const loader = document.querySelector( '.loader-pop-up' );
+const loaderIcon = document.querySelector( '.loader-pop-up .loader-icon i' );
 
 function createPost ( post ) {
     // separate time and date from created_at
@@ -7,7 +9,7 @@ function createPost ( post ) {
     // limit the post content to 200 characters and add'...' at the end
     const postContent = post.post_content
 
-    // get images and sererate them with a comma if there are more than one
+    // get images and separate them with a comma if there are more than one
     let image = post.post_image;
     if ( image.includes( ',' ) ) {
         image = image.split( ',' );
@@ -18,7 +20,7 @@ function createPost ( post ) {
 
     const postContainer = `
 <div class="post">
-     <a href="./pages/view-post.html?postID=${ post.id }" class="post-title"><h3>${ post.post_title }</h3></a>
+     <a href="#" class="post-title"><h3>${ post.post_title }</h3></a>
 
      <div class="post-labels">
       <p class="post-category">${ post.category }</p>
@@ -40,15 +42,20 @@ function createPost ( post ) {
 // get postID form the url
 const url = new URL( window.location.href );
 const postID = url.searchParams.get( 'postID' );
-console.log( postID );
 
-fetch( `http://127.0.0.1:8080/posts` )
-    .then( ( response ) => response.json() )
-    .then( ( data ) => {
-        data.forEach( post => {
-            if ( post.id == postID ) {
-                createPost( post );
-                return;
-            }
+const getData = async () => {
+    loader.style.display = 'flex';
+    await fetch( `http://127.0.0.1:8080/posts` )
+        .then( ( response ) => response.json() )
+        .then( ( data ) => {
+            data.forEach( post => {
+                if ( post.id == postID ) {
+                    createPost( post );
+                    return;
+                }
+            } );
         } );
-    } );
+    loader.style.display = 'none';
+};
+
+document.addEventListener( 'DOMContentLoaded', getData );

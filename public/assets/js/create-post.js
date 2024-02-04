@@ -10,25 +10,37 @@ const category = document.querySelector( '#category' );
 const url = new URL( window.location.href );
 const postID = url.searchParams.get( 'postID' );
 
-if ( postID ) {
-    fetch( `http://127.0.0.1:8080/posts` )
-        .then( ( response ) => response.json() )
-        .then( ( data ) => {
-            data.forEach( ( post ) => {
-                if ( post.id == postID ) {
-                    title.value = post.post_title;
-                    content.value = post.post_content;
-                    category.value = post.category;
-                    return;
-                }
+document.addEventListener( 'DOMContentLoaded', () => getPost( postID ) );
+
+async function getPost ( postID ) {
+    if ( postID ) {
+        loader.style.display = 'flex';
+        await fetch( `http://127.0.0.1:8080/posts` )
+            .then( ( response ) => response.json() )
+            .then( ( data ) => {
+                data.forEach( ( post ) => {
+                    if ( post.id == postID ) {
+                        title.value = post.post_title;
+                        content.value = post.post_content;
+                        category.value = post.category;
+                        loader.style.display = 'none';
+                        return;
+                    }
+                } );
             } );
-        } );
+        loader.style.display = 'none';
+    }
 }
 
 // add event listener to the form
 createPostForm.addEventListener( 'submit', async ( e ) => {
     e.preventDefault();
+    createPost();
+} );
 
+
+async function createPost () {
+    loader.style.display = 'flex';
     const user_id = sessionStorage.getItem( 'user_id' );
 
     const images = Array.from( image.files ).map( ( file ) => {
@@ -70,7 +82,7 @@ createPostForm.addEventListener( 'submit', async ( e ) => {
         formData.append( 'images', file );
     } );
 
-    fetch( 'http://127.0.0.1:8080/upload', {
+    await fetch( 'http://127.0.0.1:8080/upload', {
         method: 'POST',
         body: formData,
     } )
@@ -84,10 +96,12 @@ createPostForm.addEventListener( 'submit', async ( e ) => {
         } );
 
     // send the post to the server
-    sendPost( post );
-} );
+    await sendPost( post );
+    loader.style.display = 'none';
+};
 
 async function sendPost ( post ) {
+    loader.style.display = 'flex';
     if ( postID ) {
         const response = await fetch( `http://127.0.0.1:8080/update-post?postID=${ postID }`, {
             method: 'POST',
@@ -98,7 +112,8 @@ async function sendPost ( post ) {
         } );
         const data = await response.text();
         // window.location.href = './my-posts.html';
-        // window.location.reload();
+        window.location.reload();
+
         return;
     } else {
         try {
@@ -110,6 +125,7 @@ async function sendPost ( post ) {
                 body: JSON.stringify( post )
             } );
             const data = await response.text();
+            loader.style.display = 'none';
             alert( 'Post created successfully, click OK to continue' );
             // redirect to my-posts.html
             window.location.href = './my-posts.html';
@@ -117,6 +133,7 @@ async function sendPost ( post ) {
             alert( 'Could not create post!' );
             throw new Error( error );
         }
-
     }
+
+    loader.style.display = 'none';
 };
