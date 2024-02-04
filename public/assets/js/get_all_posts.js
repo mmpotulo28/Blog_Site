@@ -11,14 +11,11 @@ function createPost ( post ) {
     // limit the post content to 200 characters and add'...' at the end
     const postContent = post.post_content.slice( 0, 200 ) + '...';
 
-    // get images and sererate them with a comma if there are more than one
+    // get images and separate them with a comma if there are more than one
     let image = post.post_image;
     if ( image.includes( ',' ) ) {
         image = image.split( ',' );
     }
-
-    console.log("images:", image)
-
 
     const postContainer = `
 <div class="post">
@@ -61,15 +58,11 @@ const getPosts = async () => {
             allPosts.forEach( post => {
                 createPost( post );
             } );
-
-            // start headline animation
-            categoriesArray = getAllCategories();
-            setTopAuthors();
         } )
         .catch( error => {
             throw new Error( 'Error:', error );
         } );
-    
+
     loader.style.display = 'none';
 };
 
@@ -81,40 +74,5 @@ function sortAllPosts () {
         const dateA = new Date( a.created_at );
         const dateB = new Date( b.created_at );
         return dateB - dateA;
-    } );
-}
-
-// getAll post categories
-function getAllCategories () {
-    allPosts.forEach( post => {
-        if ( !categoriesArray.includes( post.category ) ) {
-            categoriesArray.push( post.category );
-        }
-    } );
-
-    categories.innerHTML = '<h1 class="sec-heading">Category</h1>';
-
-    categoriesArray.forEach( category => {
-        categories.innerHTML += `
-        <a href="#">${ category }</a>
-        `;
-    } );
-
-    return categoriesArray;
-}
-
-function setTopAuthors () {
-    topAuthors.innerHTML = `<h1 class="sec-heading">Top Authors</h1>`;
-
-    allPosts.forEach( post => {
-        if ( !authorsArray.includes( post.post_author ) ) {
-            authorsArray.push( post.post_author );
-        }
-    } );
-
-    authorsArray.forEach( author => {
-        topAuthors.innerHTML += `
-        <a href="#">${ author }</a>
-        `;
     } );
 }

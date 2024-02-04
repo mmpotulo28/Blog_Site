@@ -11,7 +11,6 @@ const url = new URL( window.location.href );
 const postID = url.searchParams.get( 'postID' );
 
 document.addEventListener( 'DOMContentLoaded', () => getPost( postID ) );
-
 async function getPost ( postID ) {
     if ( postID ) {
         loader.style.display = 'flex';
