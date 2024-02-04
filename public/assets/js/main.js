@@ -46,7 +46,7 @@ function setHeadlines ( title ) {
     <li>${ title }</li>`;
 }
 
-const getData = async () => {
+const getPostss = async () => {
     fetch( 'http://localhost:8080/posts' )
         .then( response => response.json() )
         .then( posts => {
@@ -64,7 +64,7 @@ const getData = async () => {
         } );
 };
 
-document.addEventListener( 'DOMContentLoaded', getData );
+document.addEventListener( 'DOMContentLoaded', getPostss );
 
 // getAll post categories
 function getAllCategories ( posts ) {
