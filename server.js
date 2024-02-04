@@ -270,13 +270,13 @@ app.delete( '/delete-post', ( req, res ) => {
 // like post
 app.put( '/like-post', ( req, res ) => {
     const postID = req.query.postID;
-    const likes = parseInt(req.query.likes);
+    const likes = parseInt( req.query.likes );
 
     const pool = new sql.ConnectionPool( config );
     pool.connect().then( () => {
         const request = new sql.Request( pool );
-        request.input('likes', sql.Int, likes); // Declare the scalar variable
-        request.input('postID', sql.Int, postID); // Declare the scalar variable
+        request.input( 'likes', sql.Int, likes ); // Declare the scalar variable
+        request.input( 'postID', sql.Int, postID ); // Declare the scalar variable
         request.query( 'UPDATE posts SET likes = @likes WHERE id = @postID' ).then( ( result ) => {
             console.log( 'Likes updated: ', result );
             res.send( 'Likes updated' );
@@ -285,6 +285,51 @@ app.put( '/like-post', ( req, res ) => {
         } ).finally( () => {
             pool.close();
         } );
+    } ).catch( ( err ) => {
+        throw err;
+    } );
+} );
+
+// comment on post
+app.post( '/comment-on-post', ( req, res ) => {
+    const postID = req.query.postID;
+    const authorID = req.query.userID;
+    const comment = req.query.comment;
+    let commentID = 0;
+
+    const pool = new sql.ConnectionPool( config );
+    pool.connect().then( () => {
+        const request = new sql.Request( pool );
+        request.input( 'comment', sql.VarChar, comment ); // Declare the scalar variable
+        request.input( 'postID', sql.Int, postID ); // Declare the scalar variable
+        request.input( 'authorID', sql.Int, authorID ); // Declare the scalar variable
+
+        request.query( 'INSERT INTO comments (comment, post_id, author_id) VALUES (@comment, @postID, @authorID)' )
+            .then( ( result ) => {
+                console.log( 'Comment added to the database: ', result );
+                // set comment ID
+                commentID = result.insertId;
+
+                const request = new sql.Request( pool );
+                request.input( 'commentID', sql.Int, commentID ); // Declare the scalar variable
+                request.input( 'postID', sql.Int, postID ); // Declare the scalar variable
+
+                request.query( 'UPDATE posts SET comment_id = @commentID WHERE id = @postID' )
+                    .then( ( result ) => {
+                        console.log( 'Comments updated: ', result );
+                        console.log('comment ID: ', commentID);
+                        res.send( 'Comments updated' );
+                    } )
+                    .finally( () => {
+                        pool.close();
+                    } )
+                    .catch( ( err ) => {
+                        throw err;
+                    } );
+            } )
+            .catch( ( err ) => {
+                throw err;
+            } );
     } ).catch( ( err ) => {
         throw err;
     } );

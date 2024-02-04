@@ -221,7 +221,6 @@ main {
  padding-bottom: 10px;
 }
 
-
 .post .post-images {
  display: flex;
  position: relative;
@@ -238,10 +237,10 @@ main {
  max-width: 100%;
 }
 
-.post .post-images img{
-    max-height: 300px;
-    max-width: 100%;
-    object-fit: contain;
+.post .post-images img {
+ max-height: 300px;
+ max-width: 100%;
+ object-fit: contain;
 }
 
 .post .post-content {
@@ -273,40 +272,92 @@ main {
  max-height: fit-content !important;
 }
 
-.post .post-insights{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    gap: 20px;
-    justify-content: space-evenly;
-    align-items: center;
-    padding: 10px;
-    background-color: var(--darkbg-color);
-    color: var(--lightbg-color);
-    border-radius: 10px;
-    box-shadow: 2px 2px 5px 0 var(--theme-color);
+.post .post-insights {
+ display: flex;
+ flex-direction: row;
+ flex-wrap: nowrap;
+ gap: 20px;
+ justify-content: space-evenly;
+ align-items: center;
+ padding: 10px;
+ background-color: var(--darkbg-color);
+ color: var(--lightbg-color);
+ border-radius: 10px;
+ box-shadow: 2px 2px 5px 0 var(--theme-color);
 }
 
-.post .post-insights button{
-    background-color: var(--darkbg-color);
-    color: var(--lightbg-color);
-    padding: 5px 10px;
+.post .post-insights button {
+ background-color: var(--darkbg-color);
+ color: var(--lightbg-color);
+ padding: 5px 10px;
+ border-radius: 10px;
+ border: none;
+ cursor: pointer;
+ font-size: 18px;
+ border-radius: 20px;
+}
+
+.post .post-insights button:hover {
+ color: var(--theme-color);
+ background-color: var(--lightbg-color);
+ transform: scale(1.1);
+}
+
+.post .post-insights i {
+ color: var(--theme-color);
+ padding: 5px;
+}
+
+.comment-box {
+ display: flex;
+ position: absolute;
+ top: 50%;
+ left: 50%;
+ transform: translate(-50%, -50%);
+ flex-direction: column;
+ gap: 10px;
+ padding: 10px;
+ background-color: var(--darkbg-color);
+ color: var(--lightbg-color);
+ border-radius: 10px;
+ box-shadow: 2px 2px 5px 0 var(--theme-color);
+ justify-content: center;
+ text-align: center;
+ width: 60%;
+ overflow: hidden;
+}
+
+.comment-box textarea {
+ width: calc(90% - 20px);
+ min-height: 100px;
+ max-height: 100px;
+ padding: 10px;
+ border-radius: 10px;
+ border: none;
+ background-color: var(--lightbg-color);
+ color: var(--darkbg-color);
+ outline: none;
+ font-size: 18px;
+ resize: none;
+}
+
+.comment-box button{
+    width: 100px;
+    padding: 10px;
     border-radius: 10px;
     border: none;
+    background-color: var(--theme-color);
+    color: var(--lightbg-color);
     cursor: pointer;
     font-size: 18px;
-    border-radius: 20px;
+    margin: 10px auto;
 }
 
-.post .post-insights button:hover{
-    color: var(--theme-color);
+.comment-box button:hover {
     background-color: var(--lightbg-color);
-    transform: scale(1.1);
-}
-
-.post .post-insights i{
     color: var(--theme-color);
-    padding: 5px;
+    transform: scale(1.1);
+    font-weight: bold;
 }
 
 .main-footer {
@@ -492,39 +543,39 @@ main {
  font-weight: bold;
 }
 
-.loader-pop-up{
-    display: none;
-    position: fixed;
-    justify-content: center;
-    align-items: center;
-    top: 40%;
-    right: 50%;
-    transform: translate(50%, 20%);
-    background-color: var(--theme-color);
-    width: fit-content;
-    height: fit-content;
-    padding: 20px;
-    flex-wrap: nowrap;
-    font-size: 25px;
-    z-index: 3;
-    border-radius: 20px;
+.loader-pop-up {
+ display: none;
+ position: fixed;
+ justify-content: center;
+ align-items: center;
+ top: 40%;
+ right: 50%;
+ transform: translate(50%, 20%);
+ background-color: var(--theme-color);
+ width: fit-content;
+ height: fit-content;
+ padding: 20px;
+ flex-wrap: nowrap;
+ font-size: 25px;
+ z-index: 3;
+ border-radius: 20px;
 }
 
-.loader-pop-up .loader-icon i{
-    color: var(--lightbg-color);
-    margin-right: 10px;
+.loader-pop-up .loader-icon i {
+ color: var(--lightbg-color);
+ margin-right: 10px;
 }
 
 .rotateAnimation {
-    animation: rotate 2s linear infinite;
+ animation: rotate 2s linear infinite;
 }
 
 /* set icon rotation using keyFrames */
 @keyframes rotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+ 0% {
+  transform: rotate(0deg);
+ }
+ 100% {
+  transform: rotate(360deg);
+ }
 }

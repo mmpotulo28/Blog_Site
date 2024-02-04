@@ -1,6 +1,9 @@
 const mainColumn = document.querySelector( '.main-column' );
 const loader = document.querySelector( '.loader-pop-up' );
 const loaderIcon = document.querySelector( '.loader-pop-up .loader-icon i' );
+const commentBox = document.querySelector( '.comment-box' );
+const commentForm = document.querySelector( '.comment-form' );
+const commentContent = document.querySelector( '.comment-form #comment-content' );
 
 function createPost ( post ) {
     // separate time and date from created_at
@@ -109,3 +112,31 @@ async function likePost ( postID, btn ) {
 
     loader.style.display = 'none';
 }
+
+// create comment
+function commentOnPost ( postID ) {
+    commentBox.style.display = 'flex';
+}
+
+commentForm.addEventListener( 'submit', async ( e ) => {
+    e.preventDefault();
+    loader.style.display = 'flex';
+    const user_id = sessionStorage.getItem( 'user_id' );
+    const comment = commentContent.value;
+
+    await fetch( `http://127.0.0.1:8080/comment-on-post?postID=${ postID }&userID=${ user_id }&comment=${ comment }`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    } ).then( () => {
+        commentBox.style.display = 'none';
+        commentContent.value = '';
+        loader.style.display = 'none';
+    } ).catch( ( error ) => {
+        loader.style.display = 'none';
+        throw new Error( 'Error:', error );
+    } );
+
+    loader.style.display = 'none';
+} );
