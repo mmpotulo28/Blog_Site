@@ -14,7 +14,7 @@ document.addEventListener( 'DOMContentLoaded', () => getPost( postID ) );
 async function getPost ( postID ) {
     if ( postID ) {
         loader.style.display = 'flex';
-        await fetch( `http://127.0.0.1:8080/posts` )
+        await fetch( `http://mysqlblogserver.database.windows.net:8080/posts` )
             .then( ( response ) => response.json() )
             .then( ( data ) => {
                 data.forEach( ( post ) => {
@@ -64,7 +64,7 @@ async function createPost () {
     };
 
     // get author from users table using the user_id from sessionStorage
-    await fetch( `http://127.0.0.1:8080/users` )
+    await fetch( `http://mysqlblogserver.database.windows.net:8080/users` )
         .then( ( response ) => response.json() )
         .then( ( data ) => {
             data.forEach( ( user ) => {
@@ -81,7 +81,7 @@ async function createPost () {
         formData.append( 'images', file );
     } );
 
-    await fetch( 'http://127.0.0.1:8080/upload', {
+    await fetch( 'http://mysqlblogserver.database.windows.net:8080/upload', {
         method: 'POST',
         body: formData,
     } )
@@ -102,7 +102,7 @@ async function createPost () {
 async function sendPost ( post ) {
     loader.style.display = 'flex';
     if ( postID ) {
-        const response = await fetch( `http://127.0.0.1:8080/update-post?postID=${ postID }`, {
+        const response = await fetch( `http://mysqlblogserver.database.windows.net:8080/update-post?postID=${ postID }`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -116,7 +116,7 @@ async function sendPost ( post ) {
         return;
     } else {
         try {
-            const response = await fetch( 'http://127.0.0.1:8080/create-post', {
+            const response = await fetch( 'http://mysqlblogserver.database.windows.net:8080/create-post', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

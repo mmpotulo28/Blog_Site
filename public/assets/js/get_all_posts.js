@@ -62,7 +62,7 @@ let authorsArray = [];
 // Fetch all posts from the API
 const getPosts = async () => {
     loader.style.display = 'flex';
-    await fetch( 'http://localhost:8080/posts' )
+    await fetch( 'http://mysqlblogserver.database.windows.net:8080/posts' )
         .then( response => response.json() )
         .then( posts => {
             posts.forEach( post => {

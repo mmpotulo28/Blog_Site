@@ -22,7 +22,7 @@ deleteNo.addEventListener( 'click', ( e ) => {
 
 async function deletePost () {
     loader.style.display = 'flex';
-    const response = await fetch( `http://127.0.0.1:8080/delete-post?postID=${ postID }`, {
+    const response = await fetch( `http://mysqlblogserver.database.windows.net:8080/delete-post?postID=${ postID }`, {
         method: 'DELETE'
     } );
     const data = await response.text();

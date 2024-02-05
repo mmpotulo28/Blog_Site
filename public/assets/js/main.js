@@ -47,7 +47,7 @@ function setHeadlines ( title ) {
 }
 
 const getPostss = async () => {
-    fetch( 'http://localhost:8080/posts' )
+    fetch( 'http://mysqlblogserver.database.windows.net:8080/posts' )
         .then( response => response.json() )
         .then( posts => {
             posts.forEach( post => {

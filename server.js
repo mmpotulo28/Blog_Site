@@ -21,7 +21,7 @@ const config = {
     database: 'flaze_blog',
     port: 1433,
     options: {
-        encrypt: true // Use this if you're on Windows Azure
+        encrypt: true
     }
 };
 

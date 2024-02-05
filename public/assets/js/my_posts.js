@@ -6,7 +6,7 @@ const user_id = sessionStorage.getItem( 'user_id' );
 
 const getData = async () => {
     loader.style.display = 'flex';
-    await fetch( `http://127.0.0.1:8080/posts` )
+    await fetch( `http://mysqlblogserver.database.windows.net:8080/posts` )
         .then( res => res.json() )
         .then( data => {
             // loop through the posts and add them to the table

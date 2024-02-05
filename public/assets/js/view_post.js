@@ -59,7 +59,7 @@ const postID = url.searchParams.get( 'postID' );
 
 const getData = async () => {
     loader.style.display = 'flex';
-    await fetch( `http://127.0.0.1:8080/posts` )
+    await fetch( `http://mysqlblogserver.database.windows.net:8080/posts` )
         .then( ( response ) => response.json() )
         .then( ( data ) => {
             data.forEach( post => {
@@ -100,7 +100,7 @@ async function likePost ( postID, btn ) {
     btn.innerHTML = `<i class="fas fa-thumbs-up"></i> ${ likes }`;
 
     try {
-        await fetch( `http://127.0.0.1:8080/like-post?postID=${ postID }&likes=${ likes }`, {
+        await fetch( `http://mysqlblogserver.database.windows.net:8080/like-post?postID=${ postID }&likes=${ likes }`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -124,7 +124,7 @@ commentForm.addEventListener( 'submit', async ( e ) => {
     const user_id = sessionStorage.getItem( 'user_id' );
     const comment = commentContent.value;
 
-    await fetch( `http://127.0.0.1:8080/comment-on-post?postID=${ postID }&userID=${ user_id }&comment=${ comment }`, {
+    await fetch( `http://mysqlblogserver.database.windows.net:8080/comment-on-post?postID=${ postID }&userID=${ user_id }&comment=${ comment }`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

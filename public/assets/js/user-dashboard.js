@@ -135,7 +135,7 @@ const removeError = ( input ) => {
 const updateUserProfile = async ( userProfile ) => {
     // get user information
     loader.style.display = 'flex';
-    await fetch( `http://127.0.0.1:8080/update-users?userID=${ user_id }`, {
+    await fetch( `http://mysqlblogserver.database.windows.net:8080/update-users?userID=${ user_id }`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -190,7 +190,7 @@ const getData = async () => {
             loader.style.display = 'none';
         } );
     
-    await fetch( `http://127.0.0.1:8080/posts`, {
+    await fetch( `http://mysqlblogserver.database.windows.net:8080/posts`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
